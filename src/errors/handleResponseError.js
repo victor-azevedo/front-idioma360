@@ -1,4 +1,5 @@
 export default function handleResponseError(error) {
+  // eslint-disable-next-line no-console
   console.log(error);
   if (error.response?.data?.details) {
     alert(error.response.data.details);
