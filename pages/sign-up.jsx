@@ -1,11 +1,10 @@
 import handleResponseError from "@/src/errors/handleResponseError";
-import { isLandlinePhone, parseToLandlinePhone } from "@/src/helpers";
 import { server, tokenService } from "@/src/services";
 import styled from "@emotion/styled";
 import { Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
 
 const INITIAL_FORM_SIGN_UP = {
@@ -22,18 +21,21 @@ const INITIAL_FORM_SIGN_UP = {
 export default function SignUp() {
   const [formSignUp, setFormSignUp] = useState(INITIAL_FORM_SIGN_UP);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLandlinePhone, setIsLandlinePhone] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    console.log("phone change");
+    const firstDigit = parseInt(formSignUp.phone[4]);
+    if (firstDigit >= 6) {
+      setIsLandlinePhone(false);
+    } else {
+      setIsLandlinePhone(true);
+    }
+  }, [formSignUp.phone]);
 
   function handleFormSignUp(e) {
     const { name, value } = e.target;
-
-    if (name === "phone" && isLandlinePhone(value)) {
-      return setFormSignUp({
-        ...formSignUp,
-        [name]: parseToLandlinePhone(value),
-      });
-    }
-
     setFormSignUp({ ...formSignUp, [name]: value });
   }
 
@@ -112,11 +114,7 @@ export default function SignUp() {
           onChange={handleFormSignUp}
           disabled={isLoading}
           required
-          mask={
-            isLandlinePhone(formSignUp.phone)
-              ? "(99)9999-9999"
-              : "(99)99999-9999"
-          }
+          mask={isLandlinePhone ? "(99)9999-9999" : "(99)99999-9999"}
         >
           {(inputProps) => <StyledTextField {...inputProps} />}
         </InputMask>
@@ -160,7 +158,6 @@ export default function SignUp() {
       <Link href={"/"} disabled={isLoading}>
         Home
       </Link>
-      <h1>{formSignUp.phone}</h1>
     </div>
   );
 }
