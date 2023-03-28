@@ -2,10 +2,12 @@ import handleResponseError from "@/src/errors/handleResponseError";
 import { server, tokenService } from "@/src/services";
 import styled from "@emotion/styled";
 import { Button, TextField } from "@mui/material";
+import { DateField } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import InputMask from "react-input-mask";
+import { PatternFormat } from "react-number-format";
 
 const INITIAL_FORM_SIGN_UP = {
   name: "",
@@ -25,7 +27,6 @@ export default function SignUp() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("phone change");
     const firstDigit = parseInt(formSignUp.phone[4]);
     if (firstDigit >= 6) {
       setIsLandlinePhone(false);
@@ -39,6 +40,13 @@ export default function SignUp() {
     setFormSignUp({ ...formSignUp, [name]: value });
   }
 
+  function handleDateInput(date) {
+    setFormSignUp({
+      ...formSignUp,
+      birthday: dayjs(date).format("YYYY-MM-DD"),
+    });
+  }
+
   function validatePasswordsMatch(password, confirmPassword) {
     if (password !== confirmPassword) throw Error("As senhas devem ser iguais");
   }
@@ -48,6 +56,7 @@ export default function SignUp() {
     setIsLoading(true);
     try {
       validatePasswordsMatch(formSignUp.password, formSignUp.confirmPassword);
+      // eslint-disable-next-line no-unused-vars
       const { confirmPassword, ...sigUpBody } = formSignUp;
       const { data } = await server.post("/sign-up", sigUpBody);
       tokenService.save(data.token);
@@ -64,92 +73,120 @@ export default function SignUp() {
     <div>
       <h1>CADASTRO PAGE</h1>
       <Form onSubmit={sendFormSignUp}>
-        <StyledTextField
+        <TextField
+          sx={{ m: 1, minWidth: 120 }}
+          label="Nome"
+          variant="outlined"
+          id="name-input"
           name="name"
           type="text"
-          placeholder="Nome"
           value={formSignUp.name}
           onChange={handleFormSignUp}
           disabled={isLoading}
           minLength="3"
           required
           autoFocus
-        ></StyledTextField>
-        <StyledTextField
+        ></TextField>
+        <TextField
+          sx={{ m: 1, minWidth: 120 }}
+          label="Nome Completo"
+          variant="outlined"
+          id="fullName-input"
           name="fullName"
           type="text"
-          placeholder="Nome Completo"
           value={formSignUp.fullName}
           onChange={handleFormSignUp}
           disabled={isLoading}
           minLength="3"
           required
-        ></StyledTextField>
-        <StyledTextField
+        ></TextField>
+        <DateField
+          sx={{ m: 1, minWidth: 120 }}
+          label="Data de Aniversario"
+          variant="outlined"
+          id="birthday-input"
           name="birthday"
-          type="date"
-          placeholder="Data de Nascimento"
-          value={formSignUp.birthday}
-          onChange={handleFormSignUp}
+          value={dayjs(formSignUp.birthday)}
+          onChange={handleDateInput}
           disabled={isLoading}
           required
-        ></StyledTextField>
-        <InputMask
+        ></DateField>
+        <PatternFormat
+          sx={{ m: 1, minWidth: 120 }}
+          label="CPF"
+          variant="outlined"
+          id="cpf-input"
           name="cpf"
           type="text"
-          placeholder="CPF"
           value={formSignUp.cpf}
           onChange={handleFormSignUp}
           disabled={isLoading}
           required
-          mask="999.999.999-99"
-        >
-          {(inputProps) => <StyledTextField {...inputProps} />}
-        </InputMask>
-        <InputMask
+          format="###.###.###-##"
+          mask="_"
+          customInput={TextField}
+        ></PatternFormat>
+        <PatternFormat
+          sx={{ m: 1, minWidth: 120 }}
+          label="Telefone"
+          variant="outlined"
+          id="phone-input"
           name="phone"
           type="text"
-          placeholder="Telefone"
           value={formSignUp.phone}
           onChange={handleFormSignUp}
           disabled={isLoading}
           required
-          mask={isLandlinePhone ? "(99)9999-9999" : "(99)99999-9999"}
-        >
-          {(inputProps) => <StyledTextField {...inputProps} />}
-        </InputMask>
-        <StyledTextField
+          format={isLandlinePhone ? "(##)####-####" : "(##)#####-####"}
+          mask="_"
+          customInput={TextField}
+        ></PatternFormat>
+        <TextField
+          sx={{ m: 1, minWidth: 120 }}
+          label="E-mail"
+          variant="outlined"
+          id="email-input"
           name="email"
           type="email"
-          placeholder="E-mail"
           value={formSignUp.email}
           onChange={handleFormSignUp}
           disabled={isLoading}
           required
-        ></StyledTextField>
-        <StyledTextField
+        ></TextField>
+        <TextField
+          sx={{ m: 1, minWidth: 120 }}
+          label="Senha"
+          variant="outlined"
+          id="password-input"
           name="password"
           type="password"
-          placeholder="Senha"
           value={formSignUp.password}
           onChange={handleFormSignUp}
           disabled={isLoading}
           minLength="6"
           maxLength="16"
           required
-        ></StyledTextField>
-        <StyledTextField
+        ></TextField>
+        <TextField
+          sx={{ m: 1, minWidth: 120 }}
+          label="Confirme a senha"
+          variant="outlined"
+          id="confirmPassword-input"
           name="confirmPassword"
           type="password"
-          placeholder="Confirme a Senha"
           value={formSignUp.confirmPassword}
           onChange={handleFormSignUp}
           disabled={isLoading}
           required
-        ></StyledTextField>
-        <StyledButton type="submit" variant="contained" disabled={isLoading}>
+        ></TextField>
+        <Button
+          sx={{ m: 1, minWidth: 120 }}
+          type="submit"
+          variant="contained"
+          disabled={isLoading}
+        >
           Cadastrar
-        </StyledButton>
+        </Button>
       </Form>
       <Link href={"/sign-in"} disabled={isLoading}>
         Realizar Login
@@ -162,11 +199,6 @@ export default function SignUp() {
   );
 }
 
-const StyledButton = styled(Button)``;
-const StyledTextField = styled(TextField)`
-  flex-basis: 200px;
-  flex-shrink: 0;
-`;
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
