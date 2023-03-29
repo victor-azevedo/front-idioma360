@@ -36,7 +36,10 @@ export default function OfferingCard({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => router.push(`/classe/${classeId}`)}>
+        <Button
+          size="small"
+          onClick={() => router.push(`/classes/${classeId}`)}
+        >
           Learn More
         </Button>
       </CardActions>
