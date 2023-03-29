@@ -7,6 +7,8 @@ export default function Home() {
       <Link href={"/sign-in"}>Login</Link>
       <br />
       <Link href={"/sign-up"}>Cadastro</Link>
+      <br />
+      <Link href={"/offerings"}>Ofertas de Cursos</Link>
     </>
   );
 }
