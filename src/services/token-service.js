@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import nookies from "nookies";
 
 const ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
@@ -25,8 +26,14 @@ function destroy(ctx = null) {
   nookies.destroy(ctx, ACCESS_TOKEN_KEY);
 }
 
+function decode(ctx = null) {
+  const token = get();
+  return jwt.decode(token);
+}
+
 export const tokenService = {
   save,
   get,
   destroy,
+  decode,
 };
