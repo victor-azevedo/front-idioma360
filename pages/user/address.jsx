@@ -1,6 +1,3 @@
-import handleResponseError from "@/src/errors/handleResponseError";
-import { CEP_PATTERN, getAddressDataByCEP } from "@/src/helpers";
-import { configClient, server, tokenService } from "@/src/services";
 import styled from "@emotion/styled";
 import {
   Button,
@@ -15,6 +12,12 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { PatternFormat } from "react-number-format";
 
+import handleResponseError from "@/src/errors/handleResponseError";
+import { CEP_PATTERN, getAddressDataByCEP } from "@/src/helpers";
+import useGetCitiesFromUF from "@/src/hooks/api/useGetCities";
+import useGetStates from "@/src/hooks/api/useGetStates";
+import usePostAddress from "@/src/hooks/api/usePostAddress";
+
 const INITIAL_FORM_ADDRESS = {
   street: "",
   number: "",
@@ -25,18 +28,12 @@ const INITIAL_FORM_ADDRESS = {
   uf: "",
 };
 
-export const INITIAL_CITY_LIST = [];
-export const INITIAL_STATE_LIST = [];
-
 export default function Address() {
-  const token = useRef(tokenService.get());
+  const { postAddress, postAddressLoading } = usePostAddress();
+  const { statesList, getStatesLoading } = useGetStates();
+  const { citiesList, getCities, getCitiesLoading } = useGetCitiesFromUF();
 
   const [addressForm, setAddressForm] = useState(INITIAL_FORM_ADDRESS);
-
-  const [cityList, setCityList] = useState(INITIAL_CITY_LIST);
-  const [stateList, setStateList] = useState(INITIAL_STATE_LIST);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const allowGetAddressDataByPostaCode = useRef(false);
   const inputNumberReference = useRef();
@@ -46,39 +43,13 @@ export default function Address() {
   const router = useRouter();
 
   useEffect(() => {
-    async function getStateList() {
-      try {
-        const { data } = await server.get(
-          "/address/states",
-          configClient(token.current)
-        );
-        inputCEPReference.current.focus();
-        setStateList(data);
-      } catch (error) {
-        handleResponseError(error);
+    if (addressForm.uf) {
+      getCities(addressForm.uf);
+      if (!allowGetAddressDataByPostaCode.current) {
+        inputCityReference.current.focus();
       }
     }
-    getStateList();
-  }, []);
-
-  useEffect(() => {
-    async function getCities(uf) {
-      try {
-        if (uf) {
-          const { data } = await server.get(
-            `/address/cities?uf=${uf}`,
-            configClient(token.current)
-          );
-          setCityList(data);
-          if (!allowGetAddressDataByPostaCode.current) {
-            inputCityReference.current.focus();
-          }
-        }
-      } catch (error) {
-        handleResponseError(error.response);
-      }
-    }
-    getCities(addressForm.uf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressForm.uf]);
 
   useEffect(() => {
@@ -92,6 +63,7 @@ export default function Address() {
             ...addressForm,
             ...responsePostalCode,
             number: "",
+            cityId: "",
             complement: "",
           });
           inputNumberReference.current.focus();
@@ -127,29 +99,16 @@ export default function Address() {
       cityId: name === "cityId" ? value : "",
       [name]: value,
     });
-    if (name === "uf") {
-      setCityList(INITIAL_CITY_LIST);
-    }
   }
 
-  async function sendAddressForm(event) {
+  function sendAddressForm(event) {
     event.preventDefault();
-    setIsLoading(true);
-    try {
-      // eslint-disable-next-line no-unused-vars
-      const { uf, ...userAddressBody } = addressForm;
-      await server.post(
-        "/user/address",
-        userAddressBody,
-        configClient(token.current)
-      );
-      setAddressForm(INITIAL_FORM_ADDRESS);
-      router.push("/");
-    } catch (error) {
-      handleResponseError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    // eslint-disable-next-line no-unused-vars
+    const { uf, ...userAddressBody } = addressForm;
+    postAddress(userAddressBody);
+    allowGetAddressDataByPostaCode.current = false;
+    setAddressForm(INITIAL_FORM_ADDRESS);
+    router.push("/");
   }
 
   return (
@@ -165,7 +124,7 @@ export default function Address() {
           type="text"
           value={addressForm.street}
           onChange={handleFormAddress}
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
           required
         ></TextField>
         <TextField
@@ -177,7 +136,7 @@ export default function Address() {
           type="text"
           value={addressForm.number}
           onChange={handleFormAddress}
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
           inputRef={inputNumberReference}
           required
         ></TextField>
@@ -190,7 +149,7 @@ export default function Address() {
           type="text"
           value={addressForm.complement}
           onChange={handleFormAddress}
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
           minLength="3"
         ></TextField>
         <TextField
@@ -202,7 +161,7 @@ export default function Address() {
           type="text"
           value={addressForm.district}
           onChange={handleFormAddress}
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
           required
         ></TextField>
         <PatternFormat
@@ -214,7 +173,7 @@ export default function Address() {
           type="text"
           value={addressForm.postalCode}
           onChange={(e) => handlePostaCode(e.target.value)}
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
           required
           format="#####-###"
           mask="_"
@@ -232,10 +191,12 @@ export default function Address() {
             onChange={(e) => {
               handleUfOrCity(e);
             }}
-            disabled={isLoading}
+            disabled={
+              postAddressLoading || getStatesLoading || getCitiesLoading
+            }
             required
           >
-            {stateList.map((state) => (
+            {statesList.map((state) => (
               <MenuItem key={state.id} value={state.uf}>
                 {state.uf}
               </MenuItem>
@@ -253,11 +214,13 @@ export default function Address() {
             onChange={(e) => {
               handleUfOrCity(e);
             }}
-            disabled={isLoading}
+            disabled={
+              postAddressLoading || getStatesLoading || getCitiesLoading
+            }
             required
             inputRef={inputCityReference}
           >
-            {cityList.map((city) => (
+            {citiesList.map((city) => (
               <MenuItem key={city.id} value={city.id}>
                 {city.name}
               </MenuItem>
@@ -268,12 +231,15 @@ export default function Address() {
           sx={{ m: 1, minWidth: 120 }}
           type="submit"
           variant="contained"
-          disabled={isLoading}
+          disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
         >
           Cadastrar Endereço
         </Button>
       </Form>
-      <Link href={"/"} disabled={isLoading}>
+      <Link
+        href={"/"}
+        disabled={postAddressLoading || getStatesLoading || getCitiesLoading}
+      >
         Home
       </Link>
     </div>
