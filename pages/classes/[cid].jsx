@@ -1,26 +1,28 @@
+import { Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import {
   getDayFromISOdate,
   getTimeFromISOdate,
   weekDaysToPtBR,
 } from "@/src/helpers";
 import useGetClasseById from "@/src/hooks/api/useGetClasseById";
-import { Button, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import usePostEnrollment from "@/src/hooks/api/usePostEnrollment";
 
 export default function Classe() {
   const router = useRouter();
   const { cid } = router.query;
 
   const { classe, getClasseById } = useGetClasseById();
+  const { postEnrollment } = usePostEnrollment();
 
   useEffect(() => {
     if (cid) {
       getClasseById(cid);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cid]);
-
-  function handleEnrollment() {}
 
   if (!classe) {
     return <>Loading</>;
@@ -54,7 +56,7 @@ export default function Classe() {
         Vagas disponíveis: {classe.vacancies}
       </Typography>
       <Button
-        onClick={handleEnrollment}
+        onClick={() => postEnrollment(classe.offering.id)}
         variant="contained"
         size="medium"
         sx={{ mt: 2 }}

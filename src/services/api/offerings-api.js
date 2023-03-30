@@ -7,7 +7,7 @@ export async function getOfferings() {
 }
 
 export async function postEnrollment(id) {
-  const response = await apiAuth.get(`/offerings/${id}/enrollments`);
+  const response = await apiAuth.post(`/offerings/${id}/enrollments`);
 
   return response.data;
 }
