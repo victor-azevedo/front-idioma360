@@ -1,5 +1,3 @@
-import handleResponseError from "@/src/errors/handleResponseError";
-import { server, tokenService } from "@/src/services";
 import styled from "@emotion/styled";
 import { Button, TextField } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers";
@@ -8,6 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PatternFormat } from "react-number-format";
+
+import useSignUp from "@/src/hooks/api/useSignUp";
 
 const INITIAL_FORM_SIGN_UP = {
   name: "",
@@ -21,9 +21,11 @@ const INITIAL_FORM_SIGN_UP = {
 };
 
 export default function SignUp() {
+  const { postSignUp, signUpLoading, signUpError } = useSignUp();
+
   const [formSignUp, setFormSignUp] = useState(INITIAL_FORM_SIGN_UP);
-  const [isLoading, setIsLoading] = useState(false);
   const [isLandlinePhone, setIsLandlinePhone] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -53,19 +55,13 @@ export default function SignUp() {
 
   async function sendFormSignUp(event) {
     event.preventDefault();
-    setIsLoading(true);
-    try {
-      validatePasswordsMatch(formSignUp.password, formSignUp.confirmPassword);
-      // eslint-disable-next-line no-unused-vars
-      const { confirmPassword, ...sigUpBody } = formSignUp;
-      const { data } = await server.post("/sign-up", sigUpBody);
-      tokenService.save(data.token);
-      setFormSignUp(INITIAL_FORM_SIGN_UP);
-      router.push("/");
-    } catch (error) {
-      handleResponseError(error);
-    } finally {
-      setIsLoading(false);
+    validatePasswordsMatch(formSignUp.password, formSignUp.confirmPassword);
+    // eslint-disable-next-line no-unused-vars
+    const { confirmPassword, ...sigUpBody } = formSignUp;
+    postSignUp(sigUpBody);
+    setFormSignUp(INITIAL_FORM_SIGN_UP);
+    if (!signUpError) {
+      router.push("/sign-in");
     }
   }
 
@@ -82,7 +78,7 @@ export default function SignUp() {
           type="text"
           value={formSignUp.name}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           minLength="3"
           required
           autoFocus
@@ -96,7 +92,7 @@ export default function SignUp() {
           type="text"
           value={formSignUp.fullName}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           minLength="3"
           required
         ></TextField>
@@ -108,7 +104,7 @@ export default function SignUp() {
           name="birthday"
           value={dayjs(formSignUp.birthday)}
           onChange={handleDateInput}
-          disabled={isLoading}
+          disabled={signUpLoading}
           required
         ></DateField>
         <PatternFormat
@@ -120,7 +116,7 @@ export default function SignUp() {
           type="text"
           value={formSignUp.cpf}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           required
           format="###.###.###-##"
           mask="_"
@@ -135,7 +131,7 @@ export default function SignUp() {
           type="text"
           value={formSignUp.phone}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           required
           format={isLandlinePhone ? "(##)####-####" : "(##)#####-####"}
           mask="_"
@@ -150,7 +146,7 @@ export default function SignUp() {
           type="email"
           value={formSignUp.email}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           required
         ></TextField>
         <TextField
@@ -162,7 +158,7 @@ export default function SignUp() {
           type="password"
           value={formSignUp.password}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           minLength="6"
           maxLength="16"
           required
@@ -176,23 +172,23 @@ export default function SignUp() {
           type="password"
           value={formSignUp.confirmPassword}
           onChange={handleFormSignUp}
-          disabled={isLoading}
+          disabled={signUpLoading}
           required
         ></TextField>
         <Button
           sx={{ m: 1, minWidth: 120 }}
           type="submit"
           variant="contained"
-          disabled={isLoading}
+          disabled={signUpLoading}
         >
           Cadastrar
         </Button>
       </Form>
-      <Link href={"/sign-in"} disabled={isLoading}>
+      <Link href={"/sign-in"} disabled={signUpLoading}>
         Realizar Login
       </Link>
       <br />
-      <Link href={"/"} disabled={isLoading}>
+      <Link href={"/"} disabled={signUpLoading}>
         Home
       </Link>
     </div>
