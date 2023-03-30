@@ -21,6 +21,7 @@ export default function useAsync(
     } catch (err) {
       setError(err);
       setLoading(false);
+      throw err;
     }
   };
 

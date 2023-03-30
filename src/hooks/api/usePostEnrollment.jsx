@@ -1,6 +1,3 @@
-import { useEffect } from "react";
-
-import handleResponseError from "@/src/errors/handleResponseError";
 import useAsync from "@/src/hooks/useAsync";
 import { offeringsApi } from "@/src/services/api";
 
@@ -10,12 +7,6 @@ export default function usePostEnrollment() {
     error: postEnrollmentError,
     act: postEnrollment,
   } = useAsync((id) => offeringsApi.postEnrollment(id), false);
-
-  useEffect(() => {
-    if (postEnrollmentError) {
-      handleResponseError(postEnrollmentError);
-    }
-  }, [postEnrollmentError]);
 
   return {
     postEnrollmentLoading,

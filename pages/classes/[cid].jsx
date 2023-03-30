@@ -1,7 +1,9 @@
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
+import handleResponseError from "@/src/errors/handleResponseError";
 import {
   getDayFromISOdate,
   getTimeFromISOdate,
@@ -23,6 +25,15 @@ export default function Classe() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cid]);
+
+  async function handleEnrollment() {
+    try {
+      await postEnrollment(classe.offering.id);
+      toast.success("Informações salvas com sucesso!");
+    } catch (err) {
+      handleResponseError(err);
+    }
+  }
 
   if (!classe) {
     return <>Loading</>;
@@ -56,7 +67,7 @@ export default function Classe() {
         Vagas disponíveis: {classe.vacancies}
       </Typography>
       <Button
-        onClick={() => postEnrollment(classe.offering.id)}
+        onClick={handleEnrollment}
         variant="contained"
         size="medium"
         sx={{ mt: 2 }}
