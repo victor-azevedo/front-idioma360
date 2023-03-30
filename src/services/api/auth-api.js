@@ -6,6 +6,13 @@ export async function postSignUp(data) {
   return response.data;
 }
 
+export async function postSignIn(data) {
+  const response = await api.post("/sign-in", data);
+
+  return response.data;
+}
+
 export const authApi = {
   postSignUp,
+  postSignIn,
 };
