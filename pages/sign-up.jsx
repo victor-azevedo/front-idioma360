@@ -7,7 +7,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PatternFormat } from "react-number-format";
 
+import handleResponseError from "@/src/errors/handleResponseError";
 import useSignUp from "@/src/hooks/api/useSignUp";
+import { toast } from "react-toastify";
 
 const INITIAL_FORM_SIGN_UP = {
   name: "",
@@ -58,10 +60,13 @@ export default function SignUp() {
     validatePasswordsMatch(formSignUp.password, formSignUp.confirmPassword);
     // eslint-disable-next-line no-unused-vars
     const { confirmPassword, ...sigUpBody } = formSignUp;
-    postSignUp(sigUpBody);
-    setFormSignUp(INITIAL_FORM_SIGN_UP);
-    if (!signUpError) {
+    try {
+      await postSignUp(sigUpBody);
+      toast.success("Usuário cadastro com sucesso");
+      setFormSignUp(INITIAL_FORM_SIGN_UP);
       router.push("/sign-in");
+    } catch (error) {
+      handleResponseError(error);
     }
   }
 
