@@ -3,12 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import handleResponseError from "@/src/errors/handleResponseError";
 import useSignIn from "@/src/hooks/api/useSignIn";
+import { toast } from "react-toastify";
 
 const INITIAL_FORM_SIGN_IN = { email: "", password: "" };
 
 export default function SignIn() {
-  const { postSignIn, signInLoading, signInError } = useSignIn();
+  const { postSignIn, signInLoading } = useSignIn();
 
   const [formSignIn, setFormSignIn] = useState(INITIAL_FORM_SIGN_IN);
 
@@ -19,12 +21,15 @@ export default function SignIn() {
     setFormSignIn({ ...formSignIn, [name]: value });
   }
 
-  function sendForm(event) {
+  async function sendForm(event) {
     event.preventDefault();
-    postSignIn(formSignIn);
-    setFormSignIn(INITIAL_FORM_SIGN_IN);
-    if (!signInError) {
+    try {
+      await postSignIn(formSignIn);
+      toast.success("Login realizado com sucesso");
+      setFormSignIn(INITIAL_FORM_SIGN_IN);
       router.push("/");
+    } catch (error) {
+      handleResponseError(error);
     }
   }
 
