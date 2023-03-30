@@ -1,39 +1,28 @@
-import handleResponseError from "@/src/errors/handleResponseError";
 import {
   getDayFromISOdate,
   getTimeFromISOdate,
   weekDaysToPtBR,
 } from "@/src/helpers";
-import { configClient, server, tokenService } from "@/src/services";
+import useGetClasseById from "@/src/hooks/api/useGetClasseById";
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
 export default function Classe() {
-  const token = useRef(tokenService.get());
-  const [classe, setClasse] = useState({});
-
   const router = useRouter();
   const { cid } = router.query;
 
+  const { classe, getClasseById } = useGetClasseById();
+
   useEffect(() => {
-    async function getClasse() {
-      try {
-        const { data } = await server.get(
-          `/classes/${cid}`,
-          configClient(token.current)
-        );
-        setClasse(data);
-      } catch (error) {
-        handleResponseError(error);
-      }
-    }
     if (cid) {
-      getClasse();
+      getClasseById(cid);
     }
   }, [cid]);
 
-  if (!classe.id) {
+  function handleEnrollment() {}
+
+  if (!classe) {
     return <>Loading</>;
   }
 
@@ -64,7 +53,12 @@ export default function Classe() {
       <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
         Vagas disponíveis: {classe.vacancies}
       </Typography>
-      <Button variant="contained" size="medium" sx={{ mt: 2 }}>
+      <Button
+        onClick={handleEnrollment}
+        variant="contained"
+        size="medium"
+        sx={{ mt: 2 }}
+      >
         Inscrever-se
       </Button>
     </>
