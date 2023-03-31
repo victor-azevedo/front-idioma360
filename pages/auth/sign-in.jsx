@@ -3,17 +3,18 @@ import { useFormik } from "formik";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import useSignIn from "@/src/hooks/api/useSignIn";
+import { useAuth } from "@/src/hooks/use-auth";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
-import { tokenService } from "@/src/services";
-import { toast } from "react-toastify";
 
 const INITIAL_FORM_SIGN_IN = { email: "", password: "", submit: null };
 
 const Page = () => {
   const router = useRouter();
+  const auth = useAuth();
 
   const { postSignIn } = useSignIn();
 
@@ -34,9 +35,9 @@ const Page = () => {
         // eslint-disable-next-line no-unused-vars
         const { submit, ...formSignIn } = values;
         const { token } = await postSignIn(formSignIn);
-        tokenService.save(token);
+        auth.signIn(token);
         toast.success("Login realizado com sucesso");
-        router.push("/");
+        router.push("/app");
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });

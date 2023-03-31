@@ -1,7 +1,8 @@
-import { Logo } from "@/src/components/logo";
 import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Link from "next/link";
 import PropTypes from "prop-types";
+
+import { Logo } from "@/src/components/logo";
 
 export const Layout = (props) => {
   const { children } = props;
