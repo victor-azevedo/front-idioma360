@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import handleResponseError from "@/src/errors/handleResponseError";
@@ -19,6 +19,11 @@ export default function Classe() {
   const { classe, getClasseById } = useGetClasseById();
   const { postEnrollment } = usePostEnrollment();
 
+  const [
+    isUserEnrolledForThisClasseOffer,
+    setIsUserEnrolledForThisClasseOffer,
+  ] = useState(false);
+
   useEffect(() => {
     if (cid) {
       getClasseById(cid);
@@ -26,12 +31,27 @@ export default function Classe() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cid]);
 
+  useEffect(() => {
+    if (classe?.offering?.enrollment?.length > 0) {
+      const { enrollment } = classe.offering;
+      const enrollmentForThisClasseOffer = enrollment.find(
+        (enroll) => enroll.offeringId === classe.offering.id
+      );
+
+      setIsUserEnrolledForThisClasseOffer(
+        enrollmentForThisClasseOffer ? true : false
+      );
+    }
+  }, [classe]);
+
   async function handleEnrollment() {
     try {
       await postEnrollment(classe.offering.id);
       toast.success("Informações salvas com sucesso!");
     } catch (err) {
       handleResponseError(err);
+    } finally {
+      router.push("/offerings");
     }
   }
 
@@ -71,9 +91,17 @@ export default function Classe() {
         variant="contained"
         size="medium"
         sx={{ mt: 2 }}
+        disabled={isUserEnrolledForThisClasseOffer}
       >
         Inscrever-se
       </Button>
+      {isUserEnrolledForThisClasseOffer ? (
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Você ja se encontra inscrito
+        </Typography>
+      ) : (
+        ""
+      )}
     </>
   );
 }
