@@ -2,10 +2,11 @@ import { Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import handleResponseError from "@/src/errors/handleResponseError";
 import useSignIn from "@/src/hooks/api/useSignIn";
-import { toast } from "react-toastify";
+import { tokenService } from "@/src/services";
 
 const INITIAL_FORM_SIGN_IN = { email: "", password: "" };
 
@@ -24,7 +25,8 @@ export default function SignIn() {
   async function sendForm(event) {
     event.preventDefault();
     try {
-      await postSignIn(formSignIn);
+      const { token } = await postSignIn(formSignIn);
+      tokenService.save(token);
       toast.success("Login realizado com sucesso");
       setFormSignIn(INITIAL_FORM_SIGN_IN);
       router.push("/");
