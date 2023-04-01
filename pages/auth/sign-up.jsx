@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import useSignUp from "@/src/hooks/api/useSignUp";
 import { useInputRef } from "@/src/hooks/useInputRef";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
-import { DateField } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { PatternFormat } from "react-number-format";
 import { toast } from "react-toastify";
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 const INITIAL_FORM_SIGN_UP = {
   name: "",
   fullName: "",
-  birthday: "",
+  birthday: null,
   cpf: "",
   phone: "",
   email: "",
@@ -159,7 +159,7 @@ const Page = () => {
                   type="text"
                   value={formik.values.fullName}
                 />
-                <DateField
+                <DatePicker
                   error={!!(formik.touched.birthday && formik.errors.birthday)}
                   fullWidth
                   helperText={formik.touched.birthday && formik.errors.birthday}
