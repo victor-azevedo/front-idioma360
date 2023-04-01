@@ -117,6 +117,7 @@ export const AuthProvider = (props) => {
   const signUp = async () => {};
 
   const signOut = () => {
+    tokenService.destroy();
     dispatch({
       type: HANDLERS.SIGN_OUT,
     });
