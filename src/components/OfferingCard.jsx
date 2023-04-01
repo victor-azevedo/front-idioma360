@@ -21,8 +21,10 @@ export default function OfferingCard({
   return (
     <Card sx={{ m: 3, minWidth: 275 }} variant="elevation">
       <CardContent>
-        <Typography variant="h4">Curso: {classe.course.name}</Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography variant="h5" marginBottom={1}>
+          Curso: {classe.course.name}
+        </Typography>
+        <Typography fontSize={14} color="text.secondary" gutterBottom>
           Inscrições: {getDayFromISOdate(startDate)} a{" "}
           {getDayFromISOdate(endDate)}
         </Typography>
@@ -40,7 +42,7 @@ export default function OfferingCard({
           size="small"
           onClick={() => router.push(`/classes/${classeId}`)}
         >
-          Learn More
+          Saiba mais
         </Button>
       </CardActions>
     </Card>

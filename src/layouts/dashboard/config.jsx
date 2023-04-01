@@ -1,3 +1,4 @@
+import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import AssignmentTurnedInRoundedIcon from "@mui/icons-material/AssignmentTurnedInRounded";
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
@@ -22,11 +23,16 @@ export const items = [
     icon: <MenuBookRoundedIcon fontSize="small"></MenuBookRoundedIcon>,
   },
   {
-    title: "Seleções",
-    path: "/app/account",
+    title: "Seleções em aberto",
+    path: "/app/offerings/open",
     icon: (
       <AssignmentTurnedInRoundedIcon fontSize="small"></AssignmentTurnedInRoundedIcon>
     ),
+  },
+  {
+    title: "Seleções encerradas",
+    path: "/app/offerings/closed",
+    icon: <AssignmentLateIcon fontSize="small"></AssignmentLateIcon>,
   },
   {
     title: "Inscrições",
