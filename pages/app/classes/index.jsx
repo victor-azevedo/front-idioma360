@@ -1,22 +1,18 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Unstable_Grid2 as Grid,
-} from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
-import ClasseCard from "@/src/components/ClasseCard";
-import useGetClasses from "@/src/hooks/api/useGetClasses";
+import CourseClassesCard from "@/src/components/CouseClassesCard";
+import useGetCoursesClasses from "@/src/hooks/api/useGetCoursesClasses";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 const Page = () => {
-  const { classes, getClassesLoading } = useGetClasses();
+  const { coursesClasses, getCoursesClassesLoading } =
+    useGetCoursesClasses("open");
 
-  if (getClassesLoading) {
+  if (getCoursesClassesLoading) {
     return <>Loading</>;
   }
+
   return (
     <>
       <Head>
@@ -34,11 +30,9 @@ const Page = () => {
             <Typography variant="h4" marginLeft={3}>
               Turmas disponíveis
             </Typography>
-            <Grid container spacing={3}>
-              {classes.map((course) => {
-                return <ClasseCard key={course.id} {...course}></ClasseCard>;
-              })}
-            </Grid>
+            {coursesClasses.map((course) => (
+              <CourseClassesCard key={course.id} {...course} />
+            ))}
           </Stack>
         </Container>
       </Box>

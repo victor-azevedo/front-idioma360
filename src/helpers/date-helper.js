@@ -11,7 +11,7 @@ const weekDayPtBR = {
 };
 
 export function weekDaysToPtBR(weekDays) {
-  return weekDays.map((weekDay) => weekDayPtBR[weekDay]);
+  return weekDays.map((weekDay) => weekDayPtBR[weekDay]).join(" | ");
 }
 
 export function getDayFromISOdate(ISOdate) {
