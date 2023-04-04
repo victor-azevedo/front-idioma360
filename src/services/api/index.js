@@ -5,4 +5,5 @@ export * from "./classes-api";
 export * from "./courses-api";
 export * from "./enrollments-api";
 export * from "./offerings-api";
+export * from "./tests-api";
 export * from "./users-api";
