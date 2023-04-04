@@ -1,12 +1,12 @@
 import useAsync from "@/src/hooks/useAsync";
-import { offeringsApi } from "@/src/services/api";
+import { enrollmentsApi } from "@/src/services/api/enrollments-api";
 
 export default function usePostEnrollment() {
   const {
     loading: postEnrollmentLoading,
     error: postEnrollmentError,
     act: postEnrollment,
-  } = useAsync((classId) => offeringsApi.postEnrollment(classId), false);
+  } = useAsync((classId) => enrollmentsApi.postEnrollment(classId), false);
 
   return {
     postEnrollmentLoading,
