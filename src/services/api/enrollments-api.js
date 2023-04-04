@@ -1,8 +1,8 @@
 import { apiAuth } from "./api-service";
 
-export async function postEnrollment(classId) {
+export async function postEnrollment(classeId) {
   const body = {
-    classId,
+    classeId,
   };
   const response = await apiAuth.post("/enroll", body);
 
