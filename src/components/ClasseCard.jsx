@@ -3,9 +3,12 @@ import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import { Box, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import dayjs from "dayjs";
 import { useRouter } from "next/router";
-import { weekDaysToPtBR } from "../helpers";
+import {
+  getDayFromISOdate,
+  getTimeFromISOdate,
+  weekDaysToPtBR,
+} from "../helpers";
 
 export default function ClasseCard({
   id,
@@ -46,9 +49,7 @@ export default function ClasseCard({
         <Box sx={{ display: "inline-flex", color: "text.secondary" }}>
           <TodayRoundedIcon />
           <Typography variant="body1" marginLeft={1} gutterBottom>
-            {` ${dayjs(startDate).format("DD/MM/YYYY")} à ${dayjs(
-              endDate
-            ).format("DD/MM/YYYY")}`}
+            {` ${getDayFromISOdate(startDate)} à ${getDayFromISOdate(endDate)}`}
           </Typography>
         </Box>
         <Typography variant="body1" textAlign="center" gutterBottom>
@@ -57,9 +58,9 @@ export default function ClasseCard({
         <Box sx={{ display: "inline-flex", color: "text.secondary" }}>
           <AccessTimeRoundedIcon />
           <Typography variant="body1" marginLeft={1} gutterBottom>
-            {` ${dayjs(startTime).format("HH[h]mm[min]")} às ${dayjs(
+            {` ${getTimeFromISOdate(startTime)} às ${getTimeFromISOdate(
               endTime
-            ).format("HH[h]mm[min]")}`}
+            )}`}
           </Typography>
         </Box>
       </CardContent>
