@@ -1,7 +1,6 @@
-import PropTypes from "prop-types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
-const ClasseToEnrollContext = createContext({ undefined });
+const ClasseToEnrollContext = createContext({});
 
 export const ClasseToEnrollProvider = (props) => {
   const { children } = props;
@@ -16,10 +15,4 @@ export const ClasseToEnrollProvider = (props) => {
   );
 };
 
-ClasseToEnrollProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-export const ClasseToEnrollConsumer = ClasseToEnrollContext.Consumer;
-
-export const useClasseToEnrollContext = () => useContext(ClasseToEnrollContext);
+export default ClasseToEnrollContext;

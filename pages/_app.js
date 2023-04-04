@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ToastContainer } from "react-toastify";
 
+import { ClasseToEnrollProvider } from "@/src/contexts/classeToEnroll-context";
 import { AuthConsumer, AuthProvider } from "../src/contexts/auth-context";
 import { createTheme } from "../src/theme";
 
@@ -19,19 +20,21 @@ export default function App({ Component, pageProps }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ToastContainer />
-          <AuthConsumer>
-            {(auth) =>
-              auth.isLoading ? (
-                <SplashScreen />
-              ) : (
-                getLayout(<Component {...pageProps} />)
-              )
-            }
-          </AuthConsumer>
-        </ThemeProvider>
+        <ClasseToEnrollProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ToastContainer />
+            <AuthConsumer>
+              {(auth) =>
+                auth.isLoading ? (
+                  <SplashScreen />
+                ) : (
+                  getLayout(<Component {...pageProps} />)
+                )
+              }
+            </AuthConsumer>
+          </ThemeProvider>
+        </ClasseToEnrollProvider>
       </AuthProvider>
     </LocalizationProvider>
   );
