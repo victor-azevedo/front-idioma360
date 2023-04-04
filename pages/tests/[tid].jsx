@@ -43,6 +43,7 @@ const Page = () => {
 
   function handleSendAnswers() {
     console.log(questionsAnswers);
+    router.push("/app");
   }
 
   return (
