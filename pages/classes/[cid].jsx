@@ -51,7 +51,7 @@ export default function Classe() {
     } catch (err) {
       handleResponseError(err);
     } finally {
-      router.push("/offerings");
+      router.push("/app/offerings");
     }
   }
 
