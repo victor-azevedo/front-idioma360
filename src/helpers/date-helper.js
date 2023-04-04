@@ -21,3 +21,7 @@ export function getDayFromISOdate(ISOdate) {
 export function getTimeFromISOdate(ISOdate) {
   return dayjs(ISOdate).format("HH[h]mm[min]");
 }
+
+export function isToday(ISOdate) {
+  return getDayFromISOdate(ISOdate) === getDayFromISOdate();
+}
