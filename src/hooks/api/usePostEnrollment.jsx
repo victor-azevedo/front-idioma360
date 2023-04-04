@@ -6,7 +6,7 @@ export default function usePostEnrollment() {
     loading: postEnrollmentLoading,
     error: postEnrollmentError,
     act: postEnrollment,
-  } = useAsync((id) => offeringsApi.postEnrollment(id), false);
+  } = useAsync((classId) => offeringsApi.postEnrollment(classId), false);
 
   return {
     postEnrollmentLoading,

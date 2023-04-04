@@ -6,8 +6,11 @@ export async function getOfferings() {
   return response.data;
 }
 
-export async function postEnrollment(id) {
-  const response = await apiAuth.post(`/offerings/${id}/enrollments`);
+export async function postEnrollment(classId) {
+  const body = {
+    classId,
+  };
+  const response = await apiAuth.post("/offering", body);
 
   return response.data;
 }
