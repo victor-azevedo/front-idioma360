@@ -9,6 +9,13 @@ export async function postEnrollment(classeId) {
   return response.data;
 }
 
+export async function getUserEnrollments() {
+  const response = await apiAuth.get("/enroll/user");
+
+  return response.data;
+}
+
 export const enrollmentsApi = {
   postEnrollment,
+  getUserEnrollments,
 };
