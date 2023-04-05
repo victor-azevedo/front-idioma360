@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export default function handleResponseError(error) {
   // eslint-disable-next-line no-console
-  console.log(error);
+  console.log(error.response);
   if (error.response?.data?.details) {
     toast.error(error.response.data.details);
   } else if (error.response?.data) {
