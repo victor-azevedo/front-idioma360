@@ -1,9 +1,14 @@
+import handleResponseError from "@/src/errors/handleResponseError";
 import { apiAuth } from "./api-service";
 
 async function getTestById(id) {
-  const response = await apiAuth.get(`/tests/${id}`);
+  try {
+    const response = await apiAuth.get(`/tests/${id}`);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    handleResponseError(error);
+  }
 }
 
 async function postUserTestAnswers({ id, body }) {
