@@ -44,7 +44,7 @@ export default function OfferingCard({
           >
             {classes.map((classe) => (
               <Avatar
-                key={classe.id}
+                key={classe.course.id}
                 src={classe.course.imageUrl}
                 alt="bandeira"
               ></Avatar>

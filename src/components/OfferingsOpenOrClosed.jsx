@@ -11,12 +11,18 @@ import Head from "next/head";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 const OfferingsOpenOrClosed = ({ status }) => {
-  const { offerings, getOfferingsLoading } = useGetOfferings({
-    status,
-  });
+  const { offerings, getOfferingsLoading, getOfferingsError } = useGetOfferings(
+    {
+      status,
+    }
+  );
 
   if (getOfferingsLoading) {
     return <>Loading</>;
+  }
+
+  if (getOfferingsError) {
+    return <>Error</>;
   }
 
   return (
