@@ -27,7 +27,7 @@ export default function ClasseCard({
 
   return (
     <Card
-      sx={{ m: 3, width: 300 }}
+      sx={{ m: 3, width: 300, cursor: "pointer" }}
       variant="outlined"
       onClick={() => handleClasseCardClick()}
     >
