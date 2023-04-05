@@ -12,11 +12,16 @@ import useGetCourses from "@/src/hooks/api/useGetCourses";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 const Page = () => {
-  const { courses, getCoursesLoading } = useGetCourses();
+  const { courses, getCoursesLoading, getCoursesError } = useGetCourses();
 
   if (getCoursesLoading) {
     return <>Loading</>;
   }
+
+  if (getCoursesError) {
+    return <>Error</>;
+  }
+
   return (
     <>
       <Head>
