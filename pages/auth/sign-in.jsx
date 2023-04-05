@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+import handleResponseError from "@/src/errors/handleResponseError";
 import useSignIn from "@/src/hooks/api/useSignIn";
 import { useAuth } from "@/src/hooks/use-auth";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
@@ -39,6 +40,7 @@ const Page = () => {
         toast.success("Login realizado com sucesso");
         router.push("/app");
       } catch (err) {
+        handleResponseError(err);
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
