@@ -25,7 +25,7 @@ export default function UserEnrollmentCard({
   const router = useRouter();
 
   function handleForwardTest() {
-    router.push(`/test/${testId}`);
+    router.push(`/tests/${testId}`);
   }
 
   return (
