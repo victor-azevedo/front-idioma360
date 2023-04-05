@@ -6,11 +6,18 @@ import useGetUserEnrollments from "@/src/hooks/api/useGetUserEnrollments";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 const Page = () => {
-  const { userEnrollments, getUserEnrollmentsLoading } =
-    useGetUserEnrollments();
+  const {
+    userEnrollments,
+    getUserEnrollmentsLoading,
+    getUserEnrollmentsError,
+  } = useGetUserEnrollments();
 
   if (getUserEnrollmentsLoading) {
     return <>Loading</>;
+  }
+
+  if (getUserEnrollmentsError) {
+    return <>Error</>;
   }
 
   return (
