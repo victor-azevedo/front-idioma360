@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
+import handleResponseError from "@/src/errors/handleResponseError";
 import useSignUp from "@/src/hooks/api/useSignUp";
 import { useInputRef } from "@/src/hooks/useInputRef";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
@@ -77,6 +78,7 @@ const Page = () => {
         toast.success("Cadastro realizado com sucesso");
         router.push("/auth/sign-in");
       } catch (err) {
+        handleResponseError(err);
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
