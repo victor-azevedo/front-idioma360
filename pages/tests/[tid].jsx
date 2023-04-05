@@ -1,9 +1,12 @@
 import QuestionCard from "@/src/components/QuestionCard";
+import handleResponseError from "@/src/errors/handleResponseError";
 import useGetTestById from "@/src/hooks/api/useGetTestById";
+import usePostUserTestAnswers from "@/src/hooks/api/usePostUserTestAnswers";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Layout as TestLayout } from "src/layouts/test/layout";
 
 const Page = () => {
@@ -11,6 +14,8 @@ const Page = () => {
   const { tid } = router.query;
 
   const { test, getTestById, getTestByIdLoading } = useGetTestById();
+  const { postUserTestAnswers } = usePostUserTestAnswers();
+
   const [questionsAnswers, setQuestionsAnswers] = useState({});
 
   useEffect(() => {
@@ -41,9 +46,19 @@ const Page = () => {
 
   const isNotAnswered = Object.values(questionsAnswers).includes("");
 
-  function handleSendAnswers() {
-    console.log(questionsAnswers);
-    router.push("/app");
+  async function handleSendAnswers() {
+    const body = Object.entries(questionsAnswers).map(([key, value]) => ({
+      questionId: parseInt(key),
+      userAnswer: value,
+    }));
+    try {
+      await postUserTestAnswers({ id: tid, body });
+      toast.success("Respostas enviada com sucesso");
+    } catch (err) {
+      handleResponseError(err);
+    } finally {
+      router.push("/app");
+    }
   }
 
   return (
