@@ -1,3 +1,4 @@
+import ConfirmDialog from "@/src/components/ConfirmDialog";
 import QuestionCard from "@/src/components/QuestionCard";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetTestById from "@/src/hooks/api/useGetTestById";
@@ -13,10 +14,13 @@ const Page = () => {
   const router = useRouter();
   const { tid } = router.query;
 
-  const { test, getTestById, getTestByIdLoading } = useGetTestById();
-  const { postUserTestAnswers } = usePostUserTestAnswers();
+  const { test, getTestById, getTestByIdLoading, getTestByIdError } =
+    useGetTestById();
+  const { postUserTestAnswers, postUserTestAnswersError } =
+    usePostUserTestAnswers();
 
   const [questionsAnswers, setQuestionsAnswers] = useState({});
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   useEffect(() => {
     if (tid) {
@@ -36,6 +40,11 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [test]);
 
+
+  if (getTestByIdError) {
+    return <>Error</>;
+  }
+
   if (!test) {
     return <>Loading</>;
   }
@@ -44,16 +53,21 @@ const Page = () => {
     return <>Loading</>;
   }
 
+  if (postUserTestAnswersError) {
+    router.push("/app");
+  }
+
   const isNotAnswered = Object.values(questionsAnswers).includes("");
 
   async function handleSendAnswers() {
+    setOpenConfirm(false)
     const body = Object.entries(questionsAnswers).map(([key, value]) => ({
       questionId: parseInt(key),
       userAnswer: value,
     }));
     try {
       await postUserTestAnswers({ id: tid, body });
-      toast.success("Respostas enviada com sucesso");
+      toast.success("Respostas enviadas com sucesso");
     } catch (err) {
       handleResponseError(err);
     } finally {
@@ -92,11 +106,12 @@ const Page = () => {
               sx={{ mt: 3 }}
               type="submit"
               variant="contained"
-              onClick={handleSendAnswers}
+              onClick={()=>setOpenConfirm(true)}
               disabled={isNotAnswered}
             >
               Enviar Respostas
             </Button>
+            <ConfirmDialog openConfirm={openConfirm} setOpenConfirm={setOpenConfirm} handleSendAnswers={handleSendAnswers} />
           </Stack>
         </Container>
       </Box>
