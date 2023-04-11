@@ -18,11 +18,6 @@ export const items = [
     icon: <LanguageRoundedIcon fontSize="small"></LanguageRoundedIcon>,
   },
   {
-    title: "Turmas",
-    path: "/app/classes",
-    icon: <MenuBookRoundedIcon fontSize="small"></MenuBookRoundedIcon>,
-  },
-  {
     title: "Seleções em aberto",
     path: "/app/offerings/open",
     icon: (
@@ -35,7 +30,12 @@ export const items = [
     icon: <AssignmentLateIcon fontSize="small"></AssignmentLateIcon>,
   },
   {
-    title: "Inscrições",
+    title: "Turmas disponíveis",
+    path: "/app/classes",
+    icon: <MenuBookRoundedIcon fontSize="small"></MenuBookRoundedIcon>,
+  },
+  {
+    title: "Consulte suas inscrições",
     path: "/app/enrollments",
     icon: (
       <InsertDriveFileRoundedIcon fontSize="small"></InsertDriveFileRoundedIcon>
