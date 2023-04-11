@@ -16,11 +16,17 @@ export default function QuestionItem({
   return (
     <Box
       onClick={handleOption}
-      bgcolor={isSelected ? "lightcoral" : "lightgray"}
+      sx={{
+        borderRadius: 2,
+        p: 2,
+        border: 3,
+        borderColor: isSelected ? "primary.main" : "primary.lightest",
+      }}
+      bgcolor={isSelected ? "primary.dark" : "primary.light"}
+      color={isSelected ? "neutral.50" : "text.primary"}
+      fontWeight="700"
     >
-      <Typography variant="body1" marginBottom={1}>
-        {text}
-      </Typography>
+      <Typography variant="body1">{text}</Typography>
     </Box>
   );
 }
