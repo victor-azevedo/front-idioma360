@@ -152,7 +152,6 @@ export default function UserAddressForm({
     const { uf, ...userAddressBody } = addressForm;
     try {
       await postAddress(userAddressBody);
-      // allowGetAddressDataByPostaCode.current = false;
       setAddressForm({ ...INITIAL_FORM_ADDRESS });
       router.push("/");
     } catch (error) {
@@ -242,6 +241,7 @@ export default function UserAddressForm({
                     disabled={disableInput}
                     required
                   >
+                    <MenuItem value={addressForm.uf} disabled></MenuItem>
                     {statesList.map((state) => (
                       <MenuItem key={state.id} value={state.uf}>
                         {state.uf}

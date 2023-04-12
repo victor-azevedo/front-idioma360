@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -59,39 +59,29 @@ const Page = () => {
           <Typography variant="h4" gutterBottom>
             Inscrição
           </Typography>
-          <Typography variant="h5" gutterBottom>
-            Confirme seus dados pessoais antes de confirmar sua inscrição:
-          </Typography>
-          <UserInfo {...userData} />
-          {userData.address ? (
-            // <UserAddressInfo {...userData.address} />
+          <Stack spacing={3}>
+            <UserInfo {...userData} />
             <UserAddressForm {...userData.address} />
-          ) : (
-            <UserAddressForm {...userData.address} />
-            // ""
-          )}
-          <Typography variant="h5" gutterBottom>
-            Confirme informações da turma que deseja se inscrever:
-          </Typography>
-          <ClasseEnrollInfo {...classeToEnroll} />
-          <Button
-            fullWidth
-            size="large"
-            sx={{ mt: 3 }}
-            type="submit"
-            variant="contained"
-            onClick={handleEnrollment}
-            disabled={classeToEnroll.isUserEnrolledFOrThisClasse}
-          >
-            Inscrever
-          </Button>
-          {classeToEnroll.isUserEnrolledFOrThisClasse ? (
-            <Typography variant="body1" color="text.secondary" gutterBottom>
-              Você ja se encontra inscrito
-            </Typography>
-          ) : (
-            ""
-          )}
+            <ClasseEnrollInfo {...classeToEnroll} />
+            <Button
+              fullWidth
+              size="large"
+              sx={{ mt: 3 }}
+              type="submit"
+              variant="contained"
+              onClick={handleEnrollment}
+              disabled={classeToEnroll.isUserEnrolledFOrThisClasse}
+            >
+              Inscrever
+            </Button>
+            {classeToEnroll.isUserEnrolledFOrThisClasse ? (
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                Você ja se encontra inscrito
+              </Typography>
+            ) : (
+              ""
+            )}
+          </Stack>
         </Container>
       </Box>
     </>

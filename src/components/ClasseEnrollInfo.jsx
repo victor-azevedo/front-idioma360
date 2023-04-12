@@ -1,11 +1,5 @@
-import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import { Box, Typography } from "@mui/material";
-import {
-  getDayFromISOdate,
-  getTimeFromISOdate,
-  weekDaysToPtBR,
-} from "../helpers";
+import ClasseCardInfo from "./ClasseCardInfo";
 
 export default function ClasseEnrollInfo({
   name,
@@ -21,34 +15,19 @@ export default function ClasseEnrollInfo({
   }
   return (
     <Box>
-      <Typography variant="body1" marginBottom={1}>
-        {name}
+      <Typography variant="h5" gutterBottom>
+        Confirme informações da turma que deseja se inscrever:
       </Typography>
-      <Typography variant="body1" marginBottom={1}>
-        {`Vagas: ${vacancies}`}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        {weekDaysToPtBR(days)}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Período:
-      </Typography>
-      <Box sx={{ display: "inline-flex", color: "text.secondary" }}>
-        <TodayRoundedIcon />
-        <Typography variant="body1" marginLeft={1} gutterBottom>
-          {` ${getDayFromISOdate(startDate)} à ${getDayFromISOdate(endDate)}`}
-        </Typography>
-      </Box>
-      <Typography variant="body1" gutterBottom>
-        Horário:
-      </Typography>
-      <Box sx={{ display: "inline-flex", color: "text.secondary" }}>
-        <AccessTimeRoundedIcon />
-        <Typography variant="body1" marginLeft={1} gutterBottom>
-          {` ${getTimeFromISOdate(startTime)} às ${getTimeFromISOdate(
-            endTime
-          )}`}
-        </Typography>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <ClasseCardInfo
+          name={name}
+          days={days}
+          startTime={startTime}
+          endTime={endTime}
+          startDate={startDate}
+          endDate={endDate}
+          vacancies={vacancies}
+        />
       </Box>
     </Box>
   );

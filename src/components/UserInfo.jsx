@@ -4,6 +4,9 @@ import { getDayFromISOdate } from "../helpers";
 export default function UserInfo({ fullName, birthday, cpf, email, phone }) {
   return (
     <Box>
+      <Typography variant="h5" gutterBottom>
+        Confirme seus dados pessoais antes de confirmar sua inscrição:
+      </Typography>
       <Typography variant="body1" gutterBottom>
         Nome Completo: {fullName}
       </Typography>
