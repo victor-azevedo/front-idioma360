@@ -1,7 +1,7 @@
 import { apiAuth } from "./api-service";
 
 export async function postAddress(data) {
-  const response = await apiAuth.post("/user/address", data);
+  const response = await apiAuth.post("/address/user", data);
 
   return response.data;
 }

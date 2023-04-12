@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import ClasseEnrollInfo from "@/src/components/ClasseEnrollInfo";
-import UserAddressInfo from "@/src/components/UserAddressInfo";
+import UserAddressForm from "@/src/components/UserAddressForm";
 import UserInfo from "@/src/components/UserInfo";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetUserData from "@/src/hooks/api/useGetUserData";
@@ -63,7 +63,13 @@ const Page = () => {
             Confirme seus dados pessoais antes de confirmar sua inscrição:
           </Typography>
           <UserInfo {...userData} />
-          <UserAddressInfo {...userData.address} />
+          {userData.address ? (
+            // <UserAddressInfo {...userData.address} />
+            <UserAddressForm {...userData.address} />
+          ) : (
+            <UserAddressForm {...userData.address} />
+            // ""
+          )}
           <Typography variant="h5" gutterBottom>
             Confirme informações da turma que deseja se inscrever:
           </Typography>

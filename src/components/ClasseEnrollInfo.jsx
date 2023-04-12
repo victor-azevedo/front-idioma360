@@ -16,6 +16,9 @@ export default function ClasseEnrollInfo({
   endDate,
   vacancies,
 }) {
+  if (!days) {
+    return;
+  }
   return (
     <Box>
       <Typography variant="body1" marginBottom={1}>
