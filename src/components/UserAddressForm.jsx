@@ -47,17 +47,16 @@ export default function UserAddressForm({
 
   const [addressForm, setAddressForm] = useState(INITIAL_FORM_ADDRESS);
   const [allowEdition, setAllowEdition] = useState(true);
+  const [disableInput, setDisableInput] = useState(true);
 
   const allowGetAddressDataByPostaCode = useRef(false);
   const inputCEPReference = useRef();
-
-  const cityIdIsValid = useRef(false);
 
   const router = useRouter();
 
   useEffect(() => {
     if (street) {
-      // setAllowEdition(true);
+      setAllowEdition(false);
       setAddressForm({
         street,
         number,
@@ -73,7 +72,6 @@ export default function UserAddressForm({
 
   useEffect(() => {
     async function getCitiesAsync() {
-      cityIdIsValid.current = false;
       try {
         await getCities(addressForm.uf);
       } catch (error) {
@@ -88,7 +86,6 @@ export default function UserAddressForm({
 
   useEffect(() => {
     async function getAddressDataByPostalCode() {
-      cityIdIsValid.current = false;
       try {
         const responsePostalCode = await getAddressDataByCEP(
           addressForm.postalCode
@@ -107,6 +104,15 @@ export default function UserAddressForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressForm.postalCode]);
+
+  useEffect(() => {
+    setDisableInput(
+      postAddressLoading ||
+        getStatesLoading ||
+        getCitiesLoading ||
+        !allowEdition
+    );
+  }, [postAddressLoading, getStatesLoading, getCitiesLoading, allowEdition]);
 
   const handleFormAddress = useCallback((event) => {
     setAddressForm((prevAddressForm) => ({
@@ -155,7 +161,7 @@ export default function UserAddressForm({
   }
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit} disabled={allowEdition}>
       <Card>
         <CardHeader title="Endereço" subheader="Informe seu endereço" />
         <CardContent sx={{ pt: 0 }}>
@@ -169,9 +175,7 @@ export default function UserAddressForm({
                   name="street"
                   value={addressForm.street}
                   onChange={handleFormAddress}
-                  disabled={
-                    postAddressLoading || getStatesLoading || getCitiesLoading
-                  }
+                  disabled={disableInput}
                   required
                 />
               </Grid>
@@ -183,9 +187,7 @@ export default function UserAddressForm({
                   name="number"
                   value={addressForm.number}
                   onChange={handleFormAddress}
-                  disabled={
-                    postAddressLoading || getStatesLoading || getCitiesLoading
-                  }
+                  disabled={disableInput}
                   required
                 />
               </Grid>
@@ -197,9 +199,7 @@ export default function UserAddressForm({
                   name="complement"
                   value={addressForm.complement}
                   onChange={handleFormAddress}
-                  disabled={
-                    postAddressLoading || getStatesLoading || getCitiesLoading
-                  }
+                  disabled={disableInput}
                 />
               </Grid>
               <Grid xs={12} md={6}>
@@ -210,9 +210,7 @@ export default function UserAddressForm({
                   name="district"
                   value={addressForm.district}
                   onChange={handleFormAddress}
-                  disabled={
-                    postAddressLoading || getStatesLoading || getCitiesLoading
-                  }
+                  disabled={disableInput}
                   required
                 />
               </Grid>
@@ -224,9 +222,7 @@ export default function UserAddressForm({
                   name="postalCode"
                   value={addressForm.postalCode}
                   onChange={handlePostaCode}
-                  disabled={
-                    postAddressLoading || getStatesLoading || getCitiesLoading
-                  }
+                  disabled={disableInput}
                   required
                   format="#####-###"
                   mask="_"
@@ -243,9 +239,7 @@ export default function UserAddressForm({
                     name="uf"
                     value={addressForm.uf}
                     onChange={handleUfOrCity}
-                    disabled={
-                      postAddressLoading || getStatesLoading || getCitiesLoading
-                    }
+                    disabled={disableInput}
                     required
                   >
                     {statesList.map((state) => (
@@ -267,9 +261,7 @@ export default function UserAddressForm({
                     onChange={(e) => {
                       handleUfOrCity(e);
                     }}
-                    disabled={
-                      postAddressLoading || getStatesLoading || getCitiesLoading
-                    }
+                    disabled={disableInput}
                     required
                   >
                     <MenuItem value={addressForm.cityId} disabled></MenuItem>
@@ -288,12 +280,12 @@ export default function UserAddressForm({
         <CardActions sx={{ justifyContent: "flex-end" }}>
           <Button
             variant="contained"
-            onClick={() => setAllowEdition(false)}
-            disabled={!allowEdition}
+            onClick={() => setAllowEdition(true)}
+            disabled={allowEdition}
           >
             Editar
           </Button>
-          <Button variant="contained" type="submit" disabled={allowEdition}>
+          <Button variant="contained" type="submit" disabled={!allowEdition}>
             Salvar
           </Button>
         </CardActions>
