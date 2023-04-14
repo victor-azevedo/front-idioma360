@@ -1,4 +1,5 @@
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import { Avatar, Box, Stack } from "@mui/material";
@@ -22,6 +23,7 @@ export default function OfferingCard({
   enrollPrice,
   status,
   classes,
+  admin,
 }) {
   const router = useRouter();
 
@@ -149,12 +151,21 @@ export default function OfferingCard({
           justifyContent: "center",
         }}
       >
-        {status === "open" ? (
+        {status === "open" && !admin ? (
           <Button size="large" onClick={() => router.push(`/app/classes/`)}>
             Confira as turmas disponíveis
           </Button>
         ) : (
           ""
+        )}
+        {admin && (
+          <Button
+            size="large"
+            onClick={() => router.push(`/app/admin/offerings/${id}/edit`)}
+          >
+            <EditNoteRoundedIcon />
+            Editar
+          </Button>
         )}
       </CardActions>
     </Card>
