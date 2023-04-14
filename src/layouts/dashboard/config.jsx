@@ -6,7 +6,7 @@ import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import { SvgIcon } from "@mui/material";
 
-export const items = [
+export const studentItems = [
   {
     title: "Geral",
     path: "/app",
@@ -47,5 +47,31 @@ export const items = [
     icon: (
       <ManageAccountsRoundedIcon fontSize="small"></ManageAccountsRoundedIcon>
     ),
+  },
+];
+
+export const adminItems = [
+  ...studentItems,
+  {
+    title: "Gerenciar Cursos",
+    path: "/app/admin/courses/",
+    icon: <LanguageRoundedIcon fontSize="small"></LanguageRoundedIcon>,
+  },
+  {
+    title: "Gerenciar Seleções",
+    path: "/app/admin/offerings",
+    icon: (
+      <AssignmentTurnedInRoundedIcon fontSize="small"></AssignmentTurnedInRoundedIcon>
+    ),
+  },
+  {
+    title: "Gerenciar Turmas",
+    path: "/app/admin/classes",
+    icon: <MenuBookRoundedIcon fontSize="small"></MenuBookRoundedIcon>,
+  },
+  {
+    title: "Gerenciar Provas",
+    path: "/app/admin/tests",
+    icon: <MenuBookRoundedIcon fontSize="small"></MenuBookRoundedIcon>,
   },
 ];

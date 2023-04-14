@@ -11,13 +11,26 @@ import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import PropTypes from "prop-types";
 
-import { items } from "./config";
+import { useAuth } from "@/src/hooks/use-auth";
+import { useEffect, useState } from "react";
+import { adminItems, studentItems } from "./config";
 import { SideNavItem } from "./side-nav-item";
 
 export const SideNav = (props) => {
+  const {
+    user: { role },
+  } = useAuth();
+
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [items, setItems] = useState([...studentItems]);
+
+  useEffect(() => {
+    if (role === "admin") {
+      setItems([...adminItems]);
+    }
+  }, [role]);
 
   const content = (
     <Box
