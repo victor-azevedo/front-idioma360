@@ -6,6 +6,12 @@ async function getCourses() {
   return response.data;
 }
 
+async function getCourseById(id) {
+  const response = await apiAuth.get(`/courses/${id}`);
+
+  return response.data;
+}
+
 async function getCoursesClasses(status) {
   const query = status ? `?offerStatus=${status}` : "";
 
@@ -28,6 +34,7 @@ async function patchCourse(id, data) {
 
 export const coursesApi = {
   getCourses,
+  getCourseById,
   getCoursesClasses,
   postCourse,
   patchCourse,
