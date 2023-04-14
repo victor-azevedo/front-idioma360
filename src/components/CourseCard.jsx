@@ -1,3 +1,4 @@
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { useRouter } from "next/router";
@@ -39,6 +40,7 @@ export default function CourseCard({
             size="large"
             onClick={() => router.push(`/app/admin/courses/${id}/edit`)}
           >
+            <EditNoteRoundedIcon />
             Editar
           </Button>
         )}
