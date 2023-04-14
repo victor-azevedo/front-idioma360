@@ -3,13 +3,13 @@ import { coursesApi } from "@/src/services/api";
 
 export default function usePatchCourse() {
   const {
-    loading: postCourseLoading,
-    error: postCourseError,
-    act: postCourse,
+    loading: patchCourseLoading,
+    error: patchCourseError,
+    act: patchCourse,
   } = useAsync((id, data) => coursesApi.patchCourse(id, data), false);
   return {
-    postCourseLoading,
-    postCourseError,
-    postCourse,
+    patchCourseLoading,
+    patchCourseError,
+    patchCourse,
   };
 }
