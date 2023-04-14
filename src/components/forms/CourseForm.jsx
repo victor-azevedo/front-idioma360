@@ -1,4 +1,5 @@
 import handleResponseError from "@/src/errors/handleResponseError";
+import usePatchCourse from "@/src/hooks/api/usePatchCourse";
 import usePostCourse from "@/src/hooks/api/usePostCourse";
 import {
   Avatar,
@@ -17,17 +18,24 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-export default function CourseForm() {
+export default function CourseForm({
+  id,
+  name,
+  description,
+  creditHours,
+  imageUrl,
+}) {
   const router = useRouter();
 
   const { postCourse } = usePostCourse();
+  const { patchCourse } = usePatchCourse();
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      description: "",
-      creditHours: "",
-      imageUrl: "",
+      name: name || "",
+      description: description || "",
+      creditHours: creditHours || "",
+      imageUrl: imageUrl || "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -45,8 +53,13 @@ export default function CourseForm() {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await postCourse(values);
-        toast.success("Curso cadastrado com sucesso");
+        if (id) {
+          await patchCourse(id, values);
+          toast.success("Curso atualizado com sucesso");
+        } else {
+          await postCourse(values);
+          toast.success("Curso cadastrado com sucesso");
+        }
         router.push("/app/admin/courses");
       } catch (err) {
         handleResponseError(err);
