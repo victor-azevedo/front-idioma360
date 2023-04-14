@@ -14,7 +14,21 @@ async function getCoursesClasses(status) {
   return response.data;
 }
 
+async function postCourse(data) {
+  const response = await apiAuth.post("/courses", data);
+
+  return response.data;
+}
+
+async function patchCourse(id, data) {
+  const response = await apiAuth.patch(`/courses/${id}`, data);
+
+  return response.data;
+}
+
 export const coursesApi = {
   getCourses,
   getCoursesClasses,
+  postCourse,
+  patchCourse,
 };
