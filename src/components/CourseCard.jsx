@@ -1,14 +1,12 @@
-import DeleteSweepRoundedIcon from "@mui/icons-material/DeleteSweepRounded";
-import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { toast } from "react-toastify";
 import handleResponseError from "../errors/handleResponseError";
 import useDeleteCourse from "../hooks/api/useDeleteCourse";
+import AdminEditDeleteBox from "./AdminEditDeleteBox";
 import CardStyled from "./CardStyled";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
 export default function CourseCard({
   id,
@@ -21,8 +19,6 @@ export default function CourseCard({
   const router = useRouter();
 
   const { deleteCourse } = useDeleteCourse();
-
-  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const handleDeleteCourse = useCallback(async () => {
     try {
@@ -58,28 +54,10 @@ export default function CourseCard({
           Carga Horária: {creditHours}
         </Typography>
         {admin && (
-          <Box sx={{ display: "flex", gap: 10 }}>
-            <Button
-              size="large"
-              onClick={() => router.push(`/app/admin/courses/${id}/edit`)}
-            >
-              <EditNoteRoundedIcon />
-              Editar
-            </Button>
-            <Button
-              size="large"
-              onClick={() => setOpenConfirmDialog(true)}
-              color="warning"
-            >
-              <DeleteSweepRoundedIcon />
-              Deletar
-            </Button>
-            <ConfirmDeleteDialog
-              openConfirm={openConfirmDialog}
-              setOpenConfirm={setOpenConfirmDialog}
-              handleDelete={handleDeleteCourse}
-            />
-          </Box>
+          <AdminEditDeleteBox
+            handleDelete={handleDeleteCourse}
+            redirectRoute={`/app/admin/courses/${id}/edit`}
+          />
         )}
       </CardContent>
     </CardStyled>
