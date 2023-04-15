@@ -15,7 +15,7 @@ const CourseSection = (props) => {
   }
 
   return (
-    <Stack container spacing={3}>
+    <Stack spacing={3}>
       {courses.map((course) => {
         return <CourseCard key={course.id} {...course} {...props} />;
       })}
