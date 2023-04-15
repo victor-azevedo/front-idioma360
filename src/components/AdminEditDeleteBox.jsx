@@ -6,14 +6,14 @@ import { useState } from "react";
 
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
-const AdminEditDeleteBox = ({ redirectRoute, handleDelete }) => {
+const AdminEditDeleteBox = ({ redirectEditRoute, handleDelete }) => {
   const router = useRouter();
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   return (
     <Box sx={{ display: "flex", gap: 10 }}>
-      <Button size="large" onClick={() => router.push(redirectRoute)}>
+      <Button size="large" onClick={() => router.push(redirectEditRoute)}>
         <EditNoteRoundedIcon />
         Editar
       </Button>

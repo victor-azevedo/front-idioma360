@@ -56,7 +56,7 @@ export default function CourseCard({
         {admin && (
           <AdminEditDeleteBox
             handleDelete={handleDeleteCourse}
-            redirectRoute={`/app/admin/courses/${id}/edit`}
+            redirectEditRoute={`/app/admin/courses/${id}/edit`}
           />
         )}
       </CardContent>
