@@ -1,6 +1,7 @@
 import useGetOfferings from "@/src/hooks/api/useGetOfferings";
-import OfferingCard from "../OfferingCard";
 import { Grid } from "@mui/material";
+
+import OfferingCard from "../OfferingCard";
 
 const OfferSection = (props) => {
   const { offerings, getOfferingsLoading, getOfferingsError } = useGetOfferings(
@@ -14,8 +15,6 @@ const OfferSection = (props) => {
   if (getOfferingsError) {
     return <>Error</>;
   }
-
-  console.log("Section");
 
   return (
     <Grid container spacing={3}>
