@@ -8,6 +8,8 @@ import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-adm
 const Page = () => {
   const router = useRouter();
 
+  console.log("Page");
+
   return (
     <>
       <Head>

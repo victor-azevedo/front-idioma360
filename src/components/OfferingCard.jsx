@@ -1,5 +1,4 @@
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import { Avatar, Box, Stack } from "@mui/material";
@@ -9,8 +8,14 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { toast } from "react-toastify";
+
+import handleResponseError from "../errors/handleResponseError";
 import { parseMoneyToReal } from "../helpers";
 import { getDayFromISOdate, getTimeFromISOdate } from "../helpers/date-helper";
+import useDeleteOffering from "../hooks/api/useDeleteOffering";
+import AdminEditDeleteBox from "./AdminEditDeleteBox";
 
 export default function OfferingCard({
   id,
@@ -26,6 +31,20 @@ export default function OfferingCard({
   admin,
 }) {
   const router = useRouter();
+
+  const { deleteOffering } = useDeleteOffering();
+
+  const handleDeleteOffering = useCallback(async () => {
+    try {
+      await deleteOffering(id);
+      toast.success("Seleção excluído com sucesso");
+    } catch (err) {
+      handleResponseError(err);
+    } finally {
+      router.reload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Card sx={{ m: 3, width: 450 }} variant="elevation">
@@ -44,13 +63,17 @@ export default function OfferingCard({
               p: 2,
             }}
           >
-            {classes.map((classe) => (
-              <Avatar
-                key={classe.course.id}
-                src={classe.course.imageUrl}
-                alt="bandeira"
-              ></Avatar>
-            ))}
+            {classes.length === 0 ? (
+              <Avatar sx={{ opacity: 0 }}></Avatar>
+            ) : (
+              classes.map((classe) => (
+                <Avatar
+                  key={classe.course.id}
+                  src={classe.course.imageUrl}
+                  alt="bandeira"
+                ></Avatar>
+              ))
+            )}
           </Box>
           <Box>
             <Typography variant="body1" textAlign="center">
@@ -141,6 +164,13 @@ export default function OfferingCard({
               </Typography>
             </Box>
           </Box>
+          {admin && (
+            <Box>
+              <Typography variant="body1" textAlign="center" color="info">
+                Status: {status}
+              </Typography>
+            </Box>
+          )}
         </Stack>
       </CardContent>
       <CardActions
@@ -159,13 +189,10 @@ export default function OfferingCard({
           ""
         )}
         {admin && (
-          <Button
-            size="large"
-            onClick={() => router.push(`/app/admin/offerings/${id}/edit`)}
-          >
-            <EditNoteRoundedIcon />
-            Editar
-          </Button>
+          <AdminEditDeleteBox
+            handleDelete={handleDeleteOffering}
+            redirectEditRoute={`/app/admin/offerings/${id}/edit`}
+          />
         )}
       </CardActions>
     </Card>
