@@ -32,7 +32,7 @@ export default function ConfirmDeleteDialog({
         <DialogTitle>Confirma o exclusão?</DialogTitle>
         <DialogContent>
           <DialogContentText id="confirm-send-test">
-            Essa ação nao poderá ser desfeita
+            Essa ação nao poderá ser desfeita.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
