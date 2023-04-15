@@ -32,10 +32,17 @@ async function patchCourse(id, data) {
   return response.data;
 }
 
+async function deleteCourse(id) {
+  const response = await apiAuth.delete(`/courses/${id}`);
+
+  return response.data;
+}
+
 export const coursesApi = {
   getCourses,
   getCourseById,
   getCoursesClasses,
   postCourse,
   patchCourse,
+  deleteCourse,
 };
