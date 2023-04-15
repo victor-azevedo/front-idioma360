@@ -3,7 +3,10 @@ import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
+import handleResponseError from "../errors/handleResponseError";
+import useDeleteCourse from "../hooks/api/useDeleteCourse";
 import CardStyled from "./CardStyled";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
@@ -14,19 +17,24 @@ export default function CourseCard({
   description,
   imageUrl,
   admin,
-  setDeleteCourseId,
-  handleDeleteCourse,
 }) {
   const router = useRouter();
 
+  const { deleteCourse } = useDeleteCourse();
+
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
-  useEffect(() => {
-    if (openConfirmDialog) {
-      setDeleteCourseId(id);
+  const handleDeleteCourse = useCallback(async () => {
+    try {
+      await deleteCourse(id);
+      toast.success("Curso excluído com sucesso");
+    } catch (err) {
+      handleResponseError(err);
+    } finally {
+      router.reload();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openConfirmDialog]);
+  }, []);
 
   return (
     <CardStyled>
