@@ -12,6 +12,12 @@ async function getById({ resource, id }) {
   return response.data;
 }
 
+async function post({ resource, data }) {
+  const response = await apiAuth.post(`/${resource}`, data);
+
+  return response.data;
+}
+
 async function patch({ resource, id, data }) {
   const response = await apiAuth.patch(`/${resource}/${id}`, data);
 
@@ -27,6 +33,7 @@ async function deleteResource({ resource, id }) {
 export const resourcesApi = {
   getAll,
   getById,
+  post,
   patch,
   deleteResource,
 };
