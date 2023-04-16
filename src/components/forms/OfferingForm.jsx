@@ -21,6 +21,7 @@ import { DatePicker, DesktopTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -37,8 +38,11 @@ export default function OfferingForm({
   enrollPrice,
   status,
   setNewOfferingId,
+  disabled,
 }) {
   const router = useRouter();
+
+  const [allowEdition, setAllowEdition] = useState(!disabled);
 
   const { postOffering } = usePostOffering();
   const { patchOffering } = usePatchOffering();
@@ -84,6 +88,7 @@ export default function OfferingForm({
           setNewOfferingId(offeringId);
           toast.success("Seleção cadastrada com sucesso");
         }
+        setAllowEdition(false);
       } catch (err) {
         handleResponseError(err);
         helpers.setStatus({ success: false });
@@ -112,6 +117,7 @@ export default function OfferingForm({
                   type="text"
                   value={formik.values.name}
                   id="name-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -132,6 +138,7 @@ export default function OfferingForm({
                     formik.setFieldValue("startDate", value);
                   }}
                   id="start-date-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -148,6 +155,7 @@ export default function OfferingForm({
                     formik.setFieldValue("endDate", value);
                   }}
                   id="end-date-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -164,6 +172,7 @@ export default function OfferingForm({
                     formik.setFieldValue("testDate", value);
                   }}
                   id="test-date-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -188,6 +197,7 @@ export default function OfferingForm({
                     formik.setFieldValue("testStartTime", value);
                   }}
                   id="test-start-time-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -209,6 +219,7 @@ export default function OfferingForm({
                     formik.setFieldValue("testEndTime", value);
                   }}
                   id="test-end-time-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -229,6 +240,7 @@ export default function OfferingForm({
                     formik.setFieldValue("resultDate", value);
                   }}
                   id="result-date-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -255,6 +267,7 @@ export default function OfferingForm({
                     formik.setFieldValue("enrollPrice", e.target.value);
                   }}
                   id="enroll-price-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
@@ -270,6 +283,7 @@ export default function OfferingForm({
                     onChange={(e) => {
                       formik.setFieldValue("status", e.target.value);
                     }}
+                    disabled={!allowEdition}
                     required
                   >
                     <MenuItem value={"open"}>Aberto para Inscrição</MenuItem>
@@ -285,8 +299,17 @@ export default function OfferingForm({
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          <Button onClick={() => router.back()}>Cancela</Button>
-          <Button variant="contained" type="submit">
+          <Button onClick={() => router.back()} disabled={!allowEdition}>
+            Cancela
+          </Button>
+          <Button
+            variant="contained"
+            disabled={allowEdition}
+            onClick={() => setAllowEdition(true)}
+          >
+            Editar
+          </Button>
+          <Button variant="contained" type="submit" disabled={!allowEdition}>
             Salvar
           </Button>
         </CardActions>
