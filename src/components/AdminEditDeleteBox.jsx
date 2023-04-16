@@ -12,7 +12,7 @@ const AdminEditDeleteBox = ({ redirectEditRoute, handleDelete }) => {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   return (
-    <Box sx={{ display: "flex", gap: 10 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
       <Button size="large" onClick={() => router.push(redirectEditRoute)}>
         <EditNoteRoundedIcon />
         Editar
