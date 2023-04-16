@@ -11,6 +11,7 @@ export default function ClasseCard({
   startDate,
   endDate,
   vacancies,
+  course,
 }) {
   const router = useRouter();
   function handleClasseCardClick() {
@@ -27,6 +28,7 @@ export default function ClasseCard({
         startDate={startDate}
         endDate={endDate}
         vacancies={vacancies}
+        courseName={course && course.name}
       />
     </Box>
   );

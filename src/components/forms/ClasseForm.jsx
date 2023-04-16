@@ -43,20 +43,27 @@ export default function ClasseForm({
   vacancies,
   offeringId,
   courses,
+  setOpenClasseForm,
+  setOfferClasses,
+  offerClasses,
 }) {
   const router = useRouter();
 
   const { postClasse } = usePostClasse();
   const { patchClasse } = usePatchClasse();
 
-  const [weekDays, setWeekDays] = useState({
-    Sunday: false,
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
+  const [weekDaysCheckBox, setWeekDaysCheckBox] = useState(() => {
+    const initialWeekDaysCheckBox = {
+      Sunday: false,
+      Monday: false,
+      Tuesday: false,
+      Wednesday: false,
+      Thursday: false,
+      Friday: false,
+      Saturday: false,
+    };
+    days?.forEach((day) => (initialWeekDaysCheckBox[day] = true));
+    return initialWeekDaysCheckBox;
   });
 
   const formik = useFormik({
@@ -69,6 +76,7 @@ export default function ClasseForm({
       vacancies: vacancies || null,
       courseId: courseId || null,
       offeringId: offeringId || null,
+      days: days || [],
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -105,7 +113,9 @@ export default function ClasseForm({
           await patchClasse(id, classeBody);
           toast.success("Turma atualizada com sucesso");
         } else {
-          await postClasse(classeBody);
+          const newClasse = await postClasse(classeBody);
+          setOfferClasses([...offerClasses, newClasse]);
+          setOpenClasseForm(false);
           toast.success("Turma cadastrada com sucesso");
         }
       } catch (err) {
@@ -129,7 +139,7 @@ export default function ClasseForm({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [weekDays]
+    [weekDaysCheckBox]
   );
 
   return (
@@ -266,11 +276,11 @@ export default function ClasseForm({
                         control={
                           <Checkbox
                             name={day}
-                            checked={weekDays[day]}
+                            checked={weekDaysCheckBox[day]}
                             onChange={(e) => {
                               const { name, checked } = e.target;
-                              setWeekDays({
-                                ...weekDays,
+                              setWeekDaysCheckBox({
+                                ...weekDaysCheckBox,
                                 [name]: checked,
                               });
                               handleDays(name, checked);

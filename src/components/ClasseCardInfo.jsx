@@ -17,6 +17,7 @@ export default function ClasseCardInfo({
   startDate,
   endDate,
   vacancies,
+  courseName,
 }) {
   return (
     <Card sx={{ m: 3, width: 300 }} variant="outlined">
@@ -26,6 +27,11 @@ export default function ClasseCardInfo({
         <Typography variant="h5" marginBottom={1}>
           {name}
         </Typography>
+        {courseName && (
+          <Typography variant="h6" marginBottom={1}>
+            {`Curso: ${courseName}`}
+          </Typography>
+        )}
         <Typography variant="body1" marginBottom={1}>
           {`Vagas: ${vacancies}`}
         </Typography>
