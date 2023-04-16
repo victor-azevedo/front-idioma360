@@ -331,9 +331,9 @@ export default function ClasseForm({
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          <Button onClick={() => router.back()}>Cancela</Button>
+          <Button onClick={() => setOpenClasseForm(false)}>Cancela</Button>
           <Button variant="contained" type="submit">
-            Salvar
+            Salvar Turma
           </Button>
         </CardActions>
       </Card>

@@ -1,5 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Card, CardActions } from "@mui/material";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { toast } from "react-toastify";
+import handleResponseError from "../errors/handleResponseError";
+import useDeleteClasse from "../hooks/api/useDeleteClasse";
+import AdminEditDeleteBox from "./AdminEditDeleteBox";
 import ClasseCardInfo from "./ClasseCardInfo";
 
 export default function ClasseCard({
@@ -12,24 +17,62 @@ export default function ClasseCard({
   endDate,
   vacancies,
   course,
+  disabledOnclick,
+  admin,
 }) {
   const router = useRouter();
+
   function handleClasseCardClick() {
     router.push(`/app/classes/${id}`);
   }
 
+  const { deleteClasse } = useDeleteClasse();
+
+  const handleDeleteClasse = useCallback(async () => {
+    try {
+      await deleteClasse(id);
+      toast.success("Turma excluída com sucesso");
+    } catch (err) {
+      handleResponseError(err);
+    } finally {
+      router.reload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <Box onClick={() => handleClasseCardClick()} sx={{ cursor: "pointer" }}>
-      <ClasseCardInfo
-        name={name}
-        days={days}
-        startTime={startTime}
-        endTime={endTime}
-        startDate={startDate}
-        endDate={endDate}
-        vacancies={vacancies}
-        courseName={course && course.name}
-      />
+    <Box
+      onClick={() => (disabledOnclick ? null : handleClasseCardClick())}
+      sx={{ cursor: disabledOnclick ? "inherit" : "pointer" }}
+    >
+      <Card sx={{ m: 3, width: 300 }} variant="outlined">
+        <ClasseCardInfo
+          name={name}
+          days={days}
+          startTime={startTime}
+          endTime={endTime}
+          startDate={startDate}
+          endDate={endDate}
+          vacancies={vacancies}
+          courseName={course && course.name}
+          courseImage={course && course.imageUrl}
+        />
+        {admin && (
+          <CardActions
+            sx={{
+              w: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <AdminEditDeleteBox
+              handleDelete={handleDeleteClasse}
+              redirectEditRoute={`/app/admin/classes/${id}/edit`}
+            />
+          </CardActions>
+        )}
+      </Card>
     </Box>
   );
 }
