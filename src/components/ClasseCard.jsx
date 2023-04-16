@@ -17,6 +17,7 @@ export default function ClasseCard({
   endDate,
   vacancies,
   course,
+  offering,
   disabledOnclick,
   admin,
 }) {
@@ -56,6 +57,7 @@ export default function ClasseCard({
           vacancies={vacancies}
           courseName={course && course.name}
           courseImage={course && course.imageUrl}
+          offeringName={offering && offering.name}
         />
         {admin && (
           <CardActions

@@ -18,6 +18,7 @@ export default function ClasseCardInfo({
   vacancies,
   courseName,
   courseImage,
+  offeringName,
 }) {
   return (
     <CardContent
@@ -33,6 +34,11 @@ export default function ClasseCardInfo({
           </Typography>
           <Avatar src={courseImage} alt="bandeira" />
         </>
+      )}
+      {offeringName && (
+        <Typography variant="h6" marginBottom={1}>
+          {offeringName}
+        </Typography>
       )}
       <Typography variant="body1" margin={1}>
         {`Vagas: ${vacancies}`}
