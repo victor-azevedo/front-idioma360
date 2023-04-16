@@ -36,6 +36,7 @@ export default function OfferingForm({
   resultDate,
   enrollPrice,
   status,
+  setNewOfferingId,
 }) {
   const router = useRouter();
 
@@ -48,14 +49,10 @@ export default function OfferingForm({
       startDate: startDate ? dayjs(startDate) : null,
       endDate: endDate ? dayjs(endDate) : null,
       testDate: testDate ? dayjs(testDate) : null,
-      testStartTime:
-        testStartTime && testDate
-          ? dayjs(`${testDate}T${testStartTime}`)
-          : null,
-      testEndTime:
-        testEndTime && testDate ? dayjs(`${testDate}T${testEndTime}`) : null,
+      testStartTime: testStartTime ? dayjs(testStartTime) : null,
+      testEndTime: testEndTime ? dayjs(testEndTime) : null,
       resultDate: resultDate ? dayjs(resultDate) : null,
-      enrollPrice: enrollPrice || null,
+      enrollPrice: enrollPrice / 100 || null,
       status: status || "blocked",
     },
     validationSchema: Yup.object({
@@ -77,15 +74,16 @@ export default function OfferingForm({
     }),
     onSubmit: async (values, helpers) => {
       const dataParsed = parseOfferingToAPI({ ...values });
+      console.log(dataParsed);
       try {
         if (id) {
           await patchOffering(id, dataParsed);
           toast.success("Seleção atualizada com sucesso");
         } else {
-          await postOffering(dataParsed);
+          const { offeringId } = await postOffering(dataParsed);
+          setNewOfferingId(offeringId);
           toast.success("Seleção cadastrada com sucesso");
         }
-        router.push("/app/admin/offerings");
       } catch (err) {
         handleResponseError(err);
         helpers.setStatus({ success: false });
@@ -287,9 +285,7 @@ export default function OfferingForm({
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          <Button type="submit" onClick={() => router.back()}>
-            Cancela
-          </Button>
+          <Button onClick={() => router.back()}>Cancela</Button>
           <Button variant="contained" type="submit">
             Salvar
           </Button>
