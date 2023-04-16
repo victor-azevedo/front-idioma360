@@ -37,8 +37,8 @@ export default function OfferingForm({
   resultDate,
   enrollPrice,
   status,
-  setNewOfferingId,
   disabled,
+  type,
 }) {
   const router = useRouter();
 
@@ -78,15 +78,15 @@ export default function OfferingForm({
     }),
     onSubmit: async (values, helpers) => {
       const dataParsed = parseOfferingToAPI({ ...values });
-      console.log(dataParsed);
       try {
         if (id) {
           await patchOffering(id, dataParsed);
           toast.success("Seleção atualizada com sucesso");
         } else {
           const { offeringId } = await postOffering(dataParsed);
-          setNewOfferingId(offeringId);
           toast.success("Seleção cadastrada com sucesso");
+          toast.success("Redirecionando para inserir as Turmas");
+          router.push(`/app/admin/offerings/${offeringId}/edit`);
         }
         setAllowEdition(false);
       } catch (err) {
@@ -299,16 +299,25 @@ export default function OfferingForm({
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          <Button onClick={() => router.back()} disabled={!allowEdition}>
-            Cancela
-          </Button>
-          <Button
-            variant="contained"
-            disabled={allowEdition}
-            onClick={() => setAllowEdition(true)}
-          >
-            Editar
-          </Button>
+          {allowEdition && (
+            <Button
+              onClick={() =>
+                type !== "create" ? setAllowEdition(false) : router.back()
+              }
+              disabled={!allowEdition}
+            >
+              Cancela
+            </Button>
+          )}
+          {type !== "create" && (
+            <Button
+              variant="contained"
+              disabled={allowEdition}
+              onClick={() => setAllowEdition(true)}
+            >
+              Editar
+            </Button>
+          )}
           <Button variant="contained" type="submit" disabled={!allowEdition}>
             Salvar
           </Button>

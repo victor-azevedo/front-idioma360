@@ -19,6 +19,7 @@ import AdminEditDeleteBox from "./AdminEditDeleteBox";
 
 export default function OfferingCard({
   id,
+  name,
   startDate,
   endDate,
   testDate,
@@ -51,7 +52,7 @@ export default function OfferingCard({
       <CardContent>
         <Stack spacing={2}>
           <Typography variant="h5" textAlign="center">
-            Processo seletivo 23/1
+            {name}
           </Typography>
           <Box
             sx={{
