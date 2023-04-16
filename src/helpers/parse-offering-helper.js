@@ -7,10 +7,12 @@ export const parseOfferingToAPI = (data) => {
     }
     data.enrollPrice = data.enrollPrice.replace(/\D/g, "");
     data.enrollPrice = parseInt(data.enrollPrice);
+  } else {
+    data.enrollPrice = data.enrollPrice * 100;
   }
 
   return {
-    ...parseDateTimeValuesToAPI({ ...data }),
+    ...parseDateTimeValuesToAPI(data),
     enrollPrice: data.enrollPrice,
   };
 };
