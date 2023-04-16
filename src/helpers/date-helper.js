@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
 
-const weekDayPtBR = {
-  Sunday: "Domingo-Feira",
+export const weekDayPtBR = {
+  Sunday: "Domingo",
   Monday: "Segunda-Feira",
   Tuesday: "Terça-Feira",
   Wednesday: "Quarta-Feira",
   Thursday: "Quinta-Feira",
   Friday: "Sexta-Feira",
-  Saturday: "Sábado-Feira",
+  Saturday: "Sábado",
 };
 
 export function weekDaysToPtBR(weekDays) {
@@ -36,16 +36,18 @@ export const parseDateTimeValuesToAPI = (object) => {
   ];
   const TIME_KEYS = ["testStartTime", "testEndTime", "startTime", "endTime"];
 
+  const objectParsed = { ...object };
+
   DATE_KEYS.forEach((dateKey) => {
     if (object[dateKey]) {
-      object[dateKey] = dayjs(object[dateKey]).format("YYYY-MM-DD");
+      objectParsed[dateKey] = dayjs(object[dateKey]).format("YYYY-MM-DD");
     }
   });
   TIME_KEYS.forEach((timeKey) => {
     if (object[timeKey]) {
-      object[timeKey] = dayjs(object[timeKey]).format("HH:mm");
+      objectParsed[timeKey] = dayjs(object[timeKey]).format("HH:mm");
     }
   });
 
-  return object;
+  return objectParsed;
 };
