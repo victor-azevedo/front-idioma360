@@ -175,7 +175,8 @@ export default function CourseForm({
           </Box>
         </CardContent>
         <Divider />
-        <CardActions sx={{ justifyContent: "flex-end" }}>
+        <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
+          <Button onClick={() => router.back()}>Cancela</Button>
           <Button variant="contained" type="submit">
             Salvar
           </Button>
