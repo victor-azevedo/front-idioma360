@@ -1,15 +1,15 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import CourseForm from "@/src/components/forms/CourseForm";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourseById from "@/src/hooks/api/useGetCourseById";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();

@@ -15,7 +15,8 @@ const INITIAL_FORM_SIGN_IN = { email: "", password: "", submit: null };
 
 const Page = () => {
   const router = useRouter();
-  const auth = useAuth();
+
+  const { signIn } = useAuth();
 
   const { postSignIn } = useSignIn();
 
@@ -36,8 +37,9 @@ const Page = () => {
         // eslint-disable-next-line no-unused-vars
         const { submit, ...formSignIn } = values;
         const { token } = await postSignIn(formSignIn);
-        auth.signIn(token);
+        signIn(token);
         toast.success("Login realizado com sucesso");
+        router.reload();
         router.push("/app");
       } catch (err) {
         handleResponseError(err);

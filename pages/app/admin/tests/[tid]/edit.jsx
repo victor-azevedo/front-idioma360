@@ -1,9 +1,10 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import QuestionCardAdmin from "@/src/components/QuestionCardAdmin";
 import QuestionForm from "@/src/components/forms/QuestionForm";
@@ -12,7 +13,6 @@ import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
 import useGetTestByIdAdmin from "@/src/hooks/api/useGetTestByIdAdmin";
 import { initialValuesQuestionForm } from "@/src/mock/forms-mock";
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();

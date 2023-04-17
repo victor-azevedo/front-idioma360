@@ -1,13 +1,13 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import TestForm from "@/src/components/forms/TestForm";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
 import { LayoutAdmin as DashboardLayout } from "@/src/layouts/dashboard/layout-admin";
 import { initialValuesTestForm } from "@/src/mock/forms-mock";
 import { useRouter } from "next/router";
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();

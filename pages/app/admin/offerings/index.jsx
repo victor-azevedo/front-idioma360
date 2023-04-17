@@ -1,10 +1,10 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import OfferSection from "@/src/components/sections/OfferSection";
 import { useRouter } from "next/router";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();

@@ -1,10 +1,10 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
-import CourseForm from "@/src/components/forms/CourseForm";
 import ContainerEaseIn from "@/src/components/ContainerEaseIn";
+import CourseForm from "@/src/components/forms/CourseForm";
 
 const Page = () => {
   return (

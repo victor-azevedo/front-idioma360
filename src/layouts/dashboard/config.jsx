@@ -2,9 +2,7 @@ import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import AssignmentTurnedInRoundedIcon from "@mui/icons-material/AssignmentTurnedInRounded";
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
-import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
-import { SvgIcon } from "@mui/material";
 
 export const studentItems = [
   {

@@ -1,4 +1,4 @@
-import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Box, Unstable_Grid2 as Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import PropTypes from "prop-types";
 
@@ -20,7 +20,7 @@ export const Layout = (props) => {
           xs={12}
           lg={6}
           sx={{
-            backgroundColor: "background.paper",k
+            backgroundColor: "background.paper",
             display: "flex",
             flexDirection: "column",
             position: "relative",

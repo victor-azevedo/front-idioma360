@@ -74,7 +74,6 @@ export default function QuestionForm({
     }),
     onSubmit: async (values, helpers) => {
       const questionBody = { ...values, testId };
-      console.log(questionBody);
       try {
         if (id) {
           // await patchQuestion(id, questionBody);

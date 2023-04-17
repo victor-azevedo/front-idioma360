@@ -1,13 +1,15 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
-export default function Home() {
-  return (
-    <>
-      <h1>HOME PAGE</h1>
-      <Link href={"/auth/sign-in"}>Login</Link>
-      <Link href={"/auth/sign-up"}>Cadastro</Link>
-      <Link href={"/app"}>App</Link>
-      <Link href={"/app/offerings"}>Ofertas de Cursos</Link>
-    </>
-  );
-}
+const Page = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/app");
+  });
+  return <></>;
+};
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export default Page;
