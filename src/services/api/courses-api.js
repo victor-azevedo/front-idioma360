@@ -1,7 +1,12 @@
+import { tokenService } from "../token-service";
 import { apiAuth } from "./api-service";
 
 async function getCourses() {
-  const response = await apiAuth.get("/courses");
+  const response = await apiAuth.get("/courses", {
+    headers: {
+      Authorization: `Bearer ${tokenService.get()}`,
+    },
+  });
 
   return response.data;
 }
