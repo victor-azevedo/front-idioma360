@@ -1,4 +1,4 @@
-import { Box, Card, CardActions } from "@mui/material";
+import { Box, Button, Card, CardActions } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ export default function ClasseCard({
   vacancies,
   course,
   offering,
+  testId,
   disabledOnclick,
   admin,
 }) {
@@ -59,6 +60,42 @@ export default function ClasseCard({
           courseImage={course && course.imageUrl}
           offeringName={offering && offering.name}
         />
+        {admin && testId && (
+          <CardActions
+            sx={{
+              w: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              size="large"
+              onClick={() => router.push(`/app/admin/tests/${testId}`)}
+              color="inherit"
+            >
+              Prova Cadastrada
+            </Button>
+          </CardActions>
+        )}
+        {admin && !testId && (
+          <CardActions
+            sx={{
+              w: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              size="large"
+              onClick={() => router.push("/app/admin/tests")}
+              color="primary"
+            >
+              Cadastrar Prova
+            </Button>
+          </CardActions>
+        )}
         {admin && (
           <CardActions
             sx={{

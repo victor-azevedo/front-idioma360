@@ -16,10 +16,10 @@ const ClasseSection = (props) => {
 
   return (
     <Grid container spacing={3}>
-      {classes.map((course) => {
+      {classes.map((classe) => {
         return (
-          <Grid key={course.id}>
-            <ClasseCard {...course} {...props} disabledOnclick />
+          <Grid key={classe.id}>
+            <ClasseCard {...classe} {...props} disabledOnclick />
           </Grid>
         );
       })}

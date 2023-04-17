@@ -107,11 +107,13 @@ export default function ClasseForm({
       const classeBody = {
         ...parseDateTimeValuesToAPI(values),
         courseId: parseInt(values.courseId),
+        vacancies: parseInt(values.vacancies),
       };
       try {
         if (id) {
           await patchClasse(id, classeBody);
           toast.success("Turma atualizada com sucesso");
+          router.back();
         } else {
           const newClasse = await postClasse(classeBody);
           setOfferClasses([...offerClasses, newClasse]);
@@ -331,7 +333,11 @@ export default function ClasseForm({
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          <Button onClick={() => setOpenClasseForm(false)}>Cancela</Button>
+          <Button
+            onClick={() => (id ? router.back() : setOpenClasseForm(false))}
+          >
+            Cancela
+          </Button>
           <Button variant="contained" type="submit">
             Salvar Turma
           </Button>
