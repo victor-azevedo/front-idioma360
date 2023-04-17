@@ -8,11 +8,6 @@ import { SvgIcon } from "@mui/material";
 
 export const studentItems = [
   {
-    title: "Geral",
-    path: "/app",
-    icon: <SvgIcon fontSize="small"></SvgIcon>,
-  },
-  {
     title: "Cursos",
     path: "/app/courses",
     icon: <LanguageRoundedIcon fontSize="small"></LanguageRoundedIcon>,
@@ -39,13 +34,6 @@ export const studentItems = [
     path: "/app/enrollments",
     icon: (
       <InsertDriveFileRoundedIcon fontSize="small"></InsertDriveFileRoundedIcon>
-    ),
-  },
-  {
-    title: "Conta",
-    path: "/app/user/",
-    icon: (
-      <ManageAccountsRoundedIcon fontSize="small"></ManageAccountsRoundedIcon>
     ),
   },
 ];

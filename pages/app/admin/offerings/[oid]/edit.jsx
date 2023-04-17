@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
 import ClasseCard from "@/src/components/ClasseCard";
+import LoadingDots from "@/src/components/LoadingDots";
 import ClasseForm from "@/src/components/forms/ClasseForm";
 import OfferingForm from "@/src/components/forms/OfferingForm";
 import handleResponseError from "@/src/errors/handleResponseError";
@@ -48,11 +49,11 @@ const Page = () => {
   }, [offeringData]);
 
   if (!offeringData || !courses) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getOfferingByIdLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getOfferingByIdError || getCoursesError) {

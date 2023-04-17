@@ -1,6 +1,7 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import LoadingDots from "@/src/components/LoadingDots";
 import TestForm from "@/src/components/forms/TestForm";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
 import { LayoutAdmin as DashboardLayout } from "@/src/layouts/dashboard/layout-admin";
@@ -13,7 +14,7 @@ const Page = () => {
   const { courses, getCoursesLoading, getCoursesError } = useGetCourses();
 
   if (!courses || getCoursesLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getCoursesError) {

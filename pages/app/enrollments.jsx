@@ -1,6 +1,7 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import LoadingDots from "@/src/components/LoadingDots";
 import UserEnrollmentCard from "@/src/components/UserEnrollmentCard";
 import useGetUserEnrollments from "@/src/hooks/api/useGetUserEnrollments";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
@@ -13,7 +14,7 @@ const Page = () => {
   } = useGetUserEnrollments();
 
   if (getUserEnrollmentsLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getUserEnrollmentsError) {

@@ -1,6 +1,7 @@
 import useGetOfferings from "@/src/hooks/api/useGetOfferings";
 import { Grid } from "@mui/material";
 
+import LoadingDots from "../LoadingDots";
 import OfferingCard from "../OfferingCard";
 
 const OfferSection = (props) => {
@@ -9,7 +10,7 @@ const OfferSection = (props) => {
   );
 
   if (getOfferingsLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getOfferingsError) {

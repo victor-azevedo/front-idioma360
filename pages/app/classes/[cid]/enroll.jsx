@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import ClasseEnrollInfo from "@/src/components/ClasseEnrollInfo";
+import LoadingDots from "@/src/components/LoadingDots";
 import UserAddressForm from "@/src/components/UserAddressForm";
 import UserInfo from "@/src/components/UserInfo";
 import handleResponseError from "@/src/errors/handleResponseError";
@@ -32,7 +33,7 @@ const Page = () => {
   }
 
   if (!cid || !userData) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (!classeToEnroll.id) {

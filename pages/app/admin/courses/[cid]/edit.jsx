@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
+import LoadingDots from "@/src/components/LoadingDots";
 import CourseForm from "@/src/components/forms/CourseForm";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourseById from "@/src/hooks/api/useGetCourseById";
@@ -34,7 +35,7 @@ const Page = () => {
   }, [router.isReady]);
 
   if (getCourseByIdLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getCourseByIdError) {

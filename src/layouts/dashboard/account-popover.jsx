@@ -15,9 +15,7 @@ export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
   const auth = useAuth();
-  const {
-    user: { userName },
-  } = auth;
+  const { user } = auth;
 
   const handleSignOut = useCallback(() => {
     onClose?.();
@@ -44,7 +42,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Conta</Typography>
         <Typography color="text.secondary" variant="body2">
-          {userName}
+          {user?.userName}
         </Typography>
       </Box>
       <Divider />

@@ -22,6 +22,9 @@ const LayoutContainer = styled("div")({
   flex: "1 1 auto",
   flexDirection: "column",
   width: "100%",
+  backgroundColor: "rgb(134,137,168)",
+  background:
+    "radial-gradient(circle, rgba(134,137,168,0.896796218487395) 5%, rgba(148,187,233,1) 100%)",
 });
 
 export const Layout = withAuthGuard((props) => {

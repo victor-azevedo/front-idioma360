@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import LoadingDots from "@/src/components/LoadingDots";
 import {
   getDayFromISOdate,
   getTimeFromISOdate,
@@ -32,11 +33,11 @@ const Page = () => {
   }
 
   if (!classe) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getClasseByIdLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   return (

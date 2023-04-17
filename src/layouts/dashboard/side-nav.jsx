@@ -12,14 +12,13 @@ import { usePathname } from "next/navigation";
 import PropTypes from "prop-types";
 
 import { useAuth } from "@/src/hooks/use-auth";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { adminItems, studentItems } from "./config";
 import { SideNavItem } from "./side-nav-item";
 
 export const SideNav = (props) => {
-  const {
-    user: { role },
-  } = useAuth();
+  const { user } = useAuth();
 
   const { open, onClose } = props;
   const pathname = usePathname();
@@ -27,10 +26,10 @@ export const SideNav = (props) => {
   const [items, setItems] = useState([...studentItems]);
 
   useEffect(() => {
-    if (role === "admin") {
+    if (user?.role === "admin") {
       setItems([...adminItems]);
     }
-  }, [role]);
+  }, [user?.role]);
 
   const content = (
     <Box
@@ -117,7 +116,13 @@ export const SideNav = (props) => {
             justifyContent: "center",
           }}
         >
-          <Typography variant="subtitle1">Sobre</Typography>
+          <Link
+            href={" https://github.com/victor-azevedo"}
+            target="_blank"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Typography variant="subtitle1">Sobre</Typography>
+          </Link>
         </Box>
       </Box>
     </Box>
@@ -133,6 +138,7 @@ export const SideNav = (props) => {
             backgroundColor: "neutral.800",
             color: "common.white",
             width: 280,
+            border: "none",
           },
         }}
         variant="permanent"

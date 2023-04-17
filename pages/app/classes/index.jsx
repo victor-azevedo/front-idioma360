@@ -2,15 +2,16 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
 import CourseClassesCard from "@/src/components/CouseClassesCard";
+import LoadingDots from "@/src/components/LoadingDots";
 import useGetCoursesClasses from "@/src/hooks/api/useGetCoursesClasses";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
-const Page = () => {
+const Page = (props) => {
   const { coursesClasses, getCoursesClassesLoading } =
     useGetCoursesClasses("open");
 
   if (getCoursesClassesLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   return (

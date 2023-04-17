@@ -1,4 +1,5 @@
 import ConfirmDialog from "@/src/components/ConfirmDialog";
+import LoadingDots from "@/src/components/LoadingDots";
 import QuestionCard from "@/src/components/QuestionCard";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetTestById from "@/src/hooks/api/useGetTestById";
@@ -40,17 +41,16 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [test]);
 
-
   if (getTestByIdError) {
     return <>Error</>;
   }
 
   if (!test) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getTestByIdLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (postUserTestAnswersError) {
@@ -60,7 +60,7 @@ const Page = () => {
   const isNotAnswered = Object.values(questionsAnswers).includes("");
 
   async function handleSendAnswers() {
-    setOpenConfirm(false)
+    setOpenConfirm(false);
     const body = Object.entries(questionsAnswers).map(([key, value]) => ({
       questionId: parseInt(key),
       userAnswer: value,
@@ -106,12 +106,16 @@ const Page = () => {
               sx={{ mt: 3 }}
               type="submit"
               variant="contained"
-              onClick={()=>setOpenConfirm(true)}
+              onClick={() => setOpenConfirm(true)}
               disabled={isNotAnswered}
             >
               Enviar Respostas
             </Button>
-            <ConfirmDialog openConfirm={openConfirm} setOpenConfirm={setOpenConfirm} handleSendAnswers={handleSendAnswers} />
+            <ConfirmDialog
+              openConfirm={openConfirm}
+              setOpenConfirm={setOpenConfirm}
+              handleSendAnswers={handleSendAnswers}
+            />
           </Stack>
         </Container>
       </Box>

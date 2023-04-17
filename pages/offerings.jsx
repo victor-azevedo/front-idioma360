@@ -1,3 +1,4 @@
+import LoadingDots from "@/src/components/LoadingDots";
 import OfferingCard from "@/src/components/OfferingCard";
 import useGetOfferings from "@/src/hooks/api/useGetOfferings";
 
@@ -10,7 +11,7 @@ export default function Offerings() {
   }
 
   if (getOfferingsLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   return (

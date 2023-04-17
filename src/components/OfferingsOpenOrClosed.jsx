@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Head from "next/head";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+import LoadingDots from "./LoadingDots";
 
 const OfferingsOpenOrClosed = ({ status }) => {
   const { offerings, getOfferingsLoading, getOfferingsError } = useGetOfferings(
@@ -18,7 +19,7 @@ const OfferingsOpenOrClosed = ({ status }) => {
   );
 
   if (getOfferingsLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getOfferingsError) {

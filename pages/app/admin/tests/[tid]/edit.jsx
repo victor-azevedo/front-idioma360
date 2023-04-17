@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
+import LoadingDots from "@/src/components/LoadingDots";
 import QuestionCardAdmin from "@/src/components/QuestionCardAdmin";
 import QuestionForm from "@/src/components/forms/QuestionForm";
 import TestForm from "@/src/components/forms/TestForm";
@@ -49,11 +50,11 @@ const Page = () => {
   }, [test]);
 
   if (!test || !courses) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getTestByIdAdminLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getTestByIdAdminError || getCoursesError) {

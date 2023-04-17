@@ -2,12 +2,13 @@ import { Grid } from "@mui/material";
 
 import ClasseCard from "@/src/components/ClasseCard";
 import useGetClasses from "@/src/hooks/api/useGetClasses";
+import LoadingDots from "../LoadingDots";
 
 const ClasseSection = (props) => {
   const { classes, getClassesLoading, getClassesError } = useGetClasses();
 
   if (getClassesLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getClassesError) {

@@ -1,13 +1,14 @@
 import { Grid } from "@mui/material";
 
 import useGetTests from "@/src/hooks/api/useGetTests";
+import LoadingDots from "../LoadingDots";
 import TestCard from "../TestCard";
 
 const TestSection = (props) => {
   const { tests, getTestsLoading, getTestsError } = useGetTests();
 
   if (getTestsLoading) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   if (getTestsError) {

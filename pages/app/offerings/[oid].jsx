@@ -11,6 +11,7 @@ import {
 } from "@/src/helpers";
 import useGetClasseById from "@/src/hooks/api/useGetClasseById";
 import usePostEnrollment from "@/src/hooks/api/usePostEnrollment";
+import LoadingDots from "@/src/components/LoadingDots";
 
 export default function Classe() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function Classe() {
   }
 
   if (!classe) {
-    return <>Loading</>;
+    return <LoadingDots />;
   }
 
   return (
