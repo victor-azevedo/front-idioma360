@@ -1,17 +1,16 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Head from "next/head";
-
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
 import ClasseCard from "@/src/components/ClasseCard";
 import ClasseForm from "@/src/components/forms/ClasseForm";
 import OfferingForm from "@/src/components/forms/OfferingForm";
-import { courses, initialValuesClasseForm } from "@/src/mock/forms-mock";
-import { useRouter } from "next/router";
-
 import handleResponseError from "@/src/errors/handleResponseError";
+import useGetCourses from "@/src/hooks/api/useGetCourses";
 import useGetOfferingById from "@/src/hooks/api/useGetOfferingById";
-import { useEffect, useState } from "react";
+import { initialValuesClasseForm } from "@/src/mock/forms-mock";
 
 const Page = () => {
   const router = useRouter();
@@ -22,9 +21,9 @@ const Page = () => {
     getOfferingByIdLoading,
     getOfferingByIdError,
   } = useGetOfferingById();
+  const { courses, getCoursesError } = useGetCourses();
 
   const [openClasseForm, setOpenClasseForm] = useState(false);
-
   const [offerClasses, setOfferClasses] = useState([]);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const Page = () => {
     }
   }, [offeringData]);
 
-  if (!offeringData) {
+  if (!offeringData || !courses) {
     return <>Loading</>;
   }
 
@@ -56,7 +55,7 @@ const Page = () => {
     return <>Loading</>;
   }
 
-  if (getOfferingByIdError) {
+  if (getOfferingByIdError || getCoursesError) {
     router.push("/app/admin/offerings");
   }
 
