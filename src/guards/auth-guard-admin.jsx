@@ -7,9 +7,7 @@ import { useAuth } from "../hooks/use-auth";
 export const AuthGuardAdmin = (props) => {
   const { children } = props;
   const router = useRouter();
-  const {
-    user: { role },
-  } = useAuth();
+  const { user } = useAuth();
   const ignore = useRef(false);
   const [adminChecked, setAdminChecked] = useState(false);
 
@@ -25,7 +23,7 @@ export const AuthGuardAdmin = (props) => {
 
     ignore.current = true;
 
-    if (role !== "admin") {
+    if (user?.role !== "admin") {
       // eslint-disable-next-line no-console
       console.log("Not authorized, redirecting");
       router

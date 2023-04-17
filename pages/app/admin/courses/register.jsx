@@ -4,6 +4,7 @@ import Head from "next/head";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
 import CourseForm from "@/src/components/forms/CourseForm";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   return (
@@ -18,14 +19,14 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Cadastrar novo Curso
             </Typography>
             <CourseForm />
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

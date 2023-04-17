@@ -1,8 +1,9 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import ClasseForm from "@/src/components/forms/ClasseForm";
 import handleResponseError from "@/src/errors/handleResponseError";
@@ -58,14 +59,14 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Editar Turma
             </Typography>
             <ClasseForm {...classe} courses={courses} />
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

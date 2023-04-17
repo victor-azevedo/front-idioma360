@@ -1,6 +1,5 @@
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { Avatar, Box, IconButton, Stack, useMediaQuery } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import PropTypes from "prop-types";
 
 import { usePopover } from "@/src/hooks/use-popover";
@@ -20,8 +19,6 @@ export const TopNav = (props) => {
         component="header"
         sx={{
           backdropFilter: "blur(6px)",
-          backgroundColor: (theme) =>
-            alpha(theme.palette.background.default, 0.8),
           position: "sticky",
           left: {
             lg: `${SIDE_NAV_WIDTH}px`,
@@ -30,6 +27,9 @@ export const TopNav = (props) => {
           width: {
             lg: `calc(100% - ${SIDE_NAV_WIDTH}px)`,
           },
+          backgroundColor: "rgb(134,137,168)",
+          background:
+            "radial-gradient(circle, rgba(134,137,168,0.896796218487395) 5%, rgba(148,187,233,1) 100%)",
           zIndex: (theme) => theme.zIndex.appBar,
         }}
       >

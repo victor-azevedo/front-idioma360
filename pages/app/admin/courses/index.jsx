@@ -1,6 +1,7 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import CourseSection from "@/src/components/sections/CourseSection";
 import { useRouter } from "next/router";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
@@ -20,7 +21,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Gerenciar Cursos
@@ -37,7 +38,7 @@ const Page = () => {
           >
             Cadastrar Curso
           </Button>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

@@ -117,7 +117,7 @@ export const SideNav = (props) => {
           }}
         >
           <Link
-            href={" https://github.com/victor-azevedo"}
+            href={" https:/github.com/victor-azevedo"}
             target="_blank"
             style={{ textDecoration: "none", color: "inherit" }}
           >

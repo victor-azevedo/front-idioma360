@@ -1,12 +1,13 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import CourseClassesCard from "@/src/components/CouseClassesCard";
 import LoadingDots from "@/src/components/LoadingDots";
 import useGetCoursesClasses from "@/src/hooks/api/useGetCoursesClasses";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
-const Page = (props) => {
+const Page = () => {
   const { coursesClasses, getCoursesClassesLoading } =
     useGetCoursesClasses("open");
 
@@ -26,7 +27,7 @@ const Page = (props) => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Turmas disponíveis
@@ -35,7 +36,7 @@ const Page = (props) => {
               <CourseClassesCard key={course.id} {...course} />
             ))}
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

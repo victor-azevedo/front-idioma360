@@ -1,9 +1,10 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import ClasseEnrollInfo from "@/src/components/ClasseEnrollInfo";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import UserAddressForm from "@/src/components/UserAddressForm";
 import UserInfo from "@/src/components/UserInfo";
@@ -56,7 +57,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Typography variant="h4" gutterBottom>
             Inscrição
           </Typography>
@@ -83,7 +84,7 @@ const Page = () => {
               ""
             )}
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

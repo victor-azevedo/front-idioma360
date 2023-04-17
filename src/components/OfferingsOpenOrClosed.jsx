@@ -1,14 +1,9 @@
 import OfferingCard from "@/src/components/OfferingCard";
 import useGetOfferings from "@/src/hooks/api/useGetOfferings";
-import {
-  Box,
-  Container,
-  Unstable_Grid2 as Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Unstable_Grid2 as Grid, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+import ContainerEaseIn from "./ContainerEaseIn";
 import LoadingDots from "./LoadingDots";
 
 const OfferingsOpenOrClosed = ({ status }) => {
@@ -38,7 +33,7 @@ const OfferingsOpenOrClosed = ({ status }) => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Seleções {status === "open" ? "em aberto" : "encerradas"}
@@ -55,7 +50,7 @@ const OfferingsOpenOrClosed = ({ status }) => {
               })}
             </Grid>
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

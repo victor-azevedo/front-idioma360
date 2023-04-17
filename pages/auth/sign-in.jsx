@@ -85,7 +85,7 @@ const Page = () => {
                 </Link>
               </Typography>
             </Stack>
-            <form noValidate onSubmit={formik.handleSubmit}>
+            <form noValidate onSubmit={formik.handleSubmit} autoComplete="off">
               <Stack spacing={3}>
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}

@@ -1,6 +1,7 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import CourseSection from "@/src/components/sections/CourseSection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
@@ -17,14 +18,14 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Nossos Cursos
             </Typography>
             <CourseSection />
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

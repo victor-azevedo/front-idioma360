@@ -2,6 +2,7 @@ import { Box, Button, Card, CardActions } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
+
 import handleResponseError from "../errors/handleResponseError";
 import useDeleteClasse from "../hooks/api/useDeleteClasse";
 import AdminEditDeleteBox from "./AdminEditDeleteBox";

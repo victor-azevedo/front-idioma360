@@ -9,6 +9,7 @@ import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourseById from "@/src/hooks/api/useGetCourseById";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();
@@ -54,14 +55,14 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Editar Curso
             </Typography>
             <CourseForm {...courseData} />
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

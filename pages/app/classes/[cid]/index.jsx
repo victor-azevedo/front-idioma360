@@ -1,8 +1,9 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import {
   getDayFromISOdate,
@@ -52,7 +53,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Typography variant="h4" gutterBottom>
             {classe.course.name}{" "}
           </Typography>
@@ -100,7 +101,7 @@ const Page = () => {
           ) : (
             ""
           )}
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

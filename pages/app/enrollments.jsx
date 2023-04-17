@@ -1,6 +1,7 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import UserEnrollmentCard from "@/src/components/UserEnrollmentCard";
 import useGetUserEnrollments from "@/src/hooks/api/useGetUserEnrollments";
@@ -33,7 +34,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Inscrições
@@ -42,7 +43,7 @@ const Page = () => {
               <UserEnrollmentCard key={enrollment.id} {...enrollment.classe} />
             ))}
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

@@ -12,6 +12,7 @@ import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
 import useGetOfferingById from "@/src/hooks/api/useGetOfferingById";
 import { initialValuesClasseForm } from "@/src/mock/forms-mock";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();
@@ -72,7 +73,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={6}>
             <Stack spacing={3}>
               <Typography variant="h3" marginLeft={3}>
@@ -144,7 +145,7 @@ const Page = () => {
               </Button>
             )}
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

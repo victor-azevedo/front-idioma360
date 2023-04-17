@@ -4,6 +4,7 @@ import Head from "next/head";
 import OfferSection from "@/src/components/sections/OfferSection";
 import { useRouter } from "next/router";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               Gerenciar Seleções
@@ -37,7 +38,7 @@ const Page = () => {
           >
             Cadastrar Seleção
           </Button>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

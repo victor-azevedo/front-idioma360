@@ -1,5 +1,6 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
+
 import CardStyled from "./CardStyled";
 import ClasseCard from "./ClasseCard";
 

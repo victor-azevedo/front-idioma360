@@ -5,6 +5,7 @@ import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-adm
 
 import OfferingForm from "@/src/components/forms/OfferingForm";
 import { initialValuesOfferForm } from "@/src/mock/forms-mock";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   return (
@@ -19,7 +20,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={6}>
             <Stack spacing={3}>
               <Typography variant="h3" marginLeft={3}>
@@ -28,7 +29,7 @@ const Page = () => {
               <OfferingForm {...initialValuesOfferForm} type="create" />
             </Stack>
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

@@ -1,10 +1,11 @@
 import ConfirmDialog from "@/src/components/ConfirmDialog";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import QuestionCard from "@/src/components/QuestionCard";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetTestById from "@/src/hooks/api/useGetTestById";
 import usePostUserTestAnswers from "@/src/hooks/api/usePostUserTestAnswers";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -87,7 +88,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={3}>
             <Typography variant="h4" marginLeft={3}>
               {test.name}
@@ -117,7 +118,7 @@ const Page = () => {
               handleSendAnswers={handleSendAnswers}
             />
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );

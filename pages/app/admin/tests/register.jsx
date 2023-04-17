@@ -7,6 +7,7 @@ import useGetCourses from "@/src/hooks/api/useGetCourses";
 import { LayoutAdmin as DashboardLayout } from "@/src/layouts/dashboard/layout-admin";
 import { initialValuesTestForm } from "@/src/mock/forms-mock";
 import { useRouter } from "next/router";
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 
 const Page = () => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <ContainerEaseIn>
           <Stack spacing={6}>
             <Stack spacing={3}>
               <Typography variant="h3" marginLeft={3}>
@@ -50,7 +51,7 @@ const Page = () => {
               />
             </Stack>
           </Stack>
-        </Container>
+        </ContainerEaseIn>
       </Box>
     </>
   );
