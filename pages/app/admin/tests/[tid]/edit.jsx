@@ -1,30 +1,37 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
-import ClasseCard from "@/src/components/ClasseCard";
-import ClasseForm from "@/src/components/forms/ClasseForm";
+import QuestionCardAdmin from "@/src/components/QuestionCardAdmin";
+import QuestionForm from "@/src/components/forms/QuestionForm";
+import TestForm from "@/src/components/forms/TestForm";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
-import { initialValuesClasseForm } from "@/src/mock/forms-mock";
+import useGetTestByIdAdmin from "@/src/hooks/api/useGetTestByIdAdmin";
+import { initialValuesQuestionForm } from "@/src/mock/forms-mock";
 
 const Page = () => {
   const router = useRouter();
 
-  const { testData, getTestById, getTestByIdLoading, getTestByIdError } =
-    useGetTestById();
+  const {
+    test,
+    getTestByIdAdmin,
+    getTestByIdAdminLoading,
+    getTestByIdAdminError,
+  } = useGetTestByIdAdmin(false);
+
   const { courses, getCoursesError } = useGetCourses();
 
-  const [openClasseForm, setOpenClasseForm] = useState(false);
-  const [offerClasses, setOfferClasses] = useState([]);
+  const [openQuestionForm, setOpenQuestionForm] = useState(false);
+  const [testQuestions, setTestQuestions] = useState([]);
 
   useEffect(() => {
     async function getTestData() {
       if (router.isReady) {
         try {
-          await getTestById(router.query.tid);
+          await getTestByIdAdmin(router.query.tid);
         } catch (error) {
           handleResponseError(error);
         }
@@ -36,27 +43,27 @@ const Page = () => {
   }, [router.isReady]);
 
   useEffect(() => {
-    if (testData) {
-      setOfferClasses([...testData.classes]);
+    if (test) {
+      setTestQuestions([...test.questions]);
     }
-  }, [testData]);
+  }, [test]);
 
-  if (!testData || !courses) {
+  if (!test || !courses) {
     return <>Loading</>;
   }
 
-  if (getTestByIdLoading) {
+  if (getTestByIdAdminLoading) {
     return <>Loading</>;
   }
 
-  if (getTestByIdError || getCoursesError) {
+  if (getTestByIdAdminError || getCoursesError) {
     router.push("/app/admin/tests");
   }
 
   return (
     <>
       <Head>
-        <title>Seleções | Idioma 360</title>
+        <title>Provas | Idioma 360</title>
       </Head>
       <Box
         component="main"
@@ -69,66 +76,64 @@ const Page = () => {
           <Stack spacing={6}>
             <Stack spacing={3}>
               <Typography variant="h3" marginLeft={3}>
-                Editar Seleção
+                Editar Prova
               </Typography>
-              <TestForm {...testData} disabled={testData.id ? true : false} />
+              <TestForm
+                {...test}
+                courses={courses}
+                disabled={test.id ? true : false}
+              />
             </Stack>
             <Stack spacing={3}>
               <Typography variant="h5" marginLeft={3}>
-                Turmas Cadastradas:
+                Questões Cadastradas:
               </Typography>
-              {offerClasses.length > 0 ? (
-                <Grid container spacing={3}>
-                  {offerClasses.map((classe) => {
+              {testQuestions.length > 0 ? (
+                <Stack spacing={3}>
+                  {testQuestions.map((question) => {
                     return (
-                      <ClasseCard
-                        key={classe.id}
-                        {...classe}
-                        disabledOnclick={true}
-                        admin={true}
-                      ></ClasseCard>
+                      <QuestionCardAdmin key={question.id} {...question} />
                     );
                   })}
-                </Grid>
+                </Stack>
               ) : (
                 <Box marginLeft={3}>
                   <Typography variant="body1" marginLeft={3}>
-                    Nenhuma turma cadastrada ainda.
+                    Nenhuma questão cadastrada ainda.
                   </Typography>
                 </Box>
               )}
             </Stack>
-            {openClasseForm && (
+            {openQuestionForm && (
               <Stack spacing={3}>
-                <ClasseForm
-                  courses={courses}
-                  testId={testData.id}
-                  setOpenClasseForm={setOpenClasseForm}
-                  setOfferClasses={setOfferClasses}
-                  offerClasses={offerClasses}
-                  getTestById={getTestById}
-                  {...initialValuesClasseForm}
+                <QuestionForm
+                  testId={test.id}
+                  setOpenQuestionForm={setOpenQuestionForm}
+                  setTestQuestions={setTestQuestions}
+                  testQuestions={testQuestions}
+                  getTestByIdAdmin={getTestByIdAdmin}
+                  {...initialValuesQuestionForm}
                 />
               </Stack>
             )}
-            {testData.id && !openClasseForm ? (
+            {test.id && !openQuestionForm ? (
               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
                 <Button
                   variant="contained"
-                  onClick={() => setOpenClasseForm(true)}
-                  disabled={openClasseForm}
+                  onClick={() => setOpenQuestionForm(true)}
+                  disabled={openQuestionForm}
                 >
-                  Inserir Turma
+                  Inserir Questão
                 </Button>
               </Box>
             ) : (
               ""
             )}
-            {offerClasses.length > 0 && (
+            {testQuestions.length > 0 && (
               <Button
                 variant="contained"
                 onClick={() => router.push("/app/admin/tests")}
-                disabled={openClasseForm}
+                disabled={openQuestionForm}
               >
                 Concluir Edição
               </Button>

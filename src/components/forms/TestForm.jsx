@@ -60,7 +60,8 @@ export default function TestForm({
         if (id) {
           // TODO: add patchTest
           // await patchTest(id, testBody);
-          toast.success("Prova atualizada com sucesso");
+          // toast.success("Prova atualizada com sucesso");
+          toast.warning("Recurso ainda nao implementado");
           router.back();
         } else {
           const { testId } = await postTest(testBody);
@@ -96,12 +97,15 @@ export default function TestForm({
                   type="text"
                   value={formik.values.name}
                   id="name-input"
+                  disabled={!allowEdition}
                   required
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <FormControl sx={{ m: 3 }}>
-                  <FormLabel id="courses-group">Escolha o Curso</FormLabel>
+                  <FormLabel id="courses-group">
+                    Escolha o Curso relacionado a Prova
+                  </FormLabel>
                   <RadioGroup
                     aria-labelledby="courses-group"
                     name="courseId"
@@ -112,9 +116,11 @@ export default function TestForm({
                         parseInt(e.target.value)
                       );
                     }}
+                    required
                   >
                     {courses.map((course) => (
                       <FormControlLabel
+                        disabled={!allowEdition}
                         key={course.id}
                         value={course.id}
                         control={<Radio />}

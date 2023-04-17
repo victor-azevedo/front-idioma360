@@ -33,3 +33,12 @@ export const initialValuesClasseForm = {
 export const initialValuesTestForm = {
   name: "Prova Teste",
 };
+
+export const initialValuesQuestionForm = {
+  title: "Questão X",
+  optionA: "errada",
+  optionB: "errada",
+  optionC: "errada",
+  optionD: "certa",
+  correctAnswer: "optionD",
+};
