@@ -29,3 +29,7 @@ export const initialValuesClasseForm = {
   courseId: 1,
   days: ["Sunday", "Friday"],
 };
+
+export const initialValuesTestForm = {
+  name: "Prova Teste",
+};
