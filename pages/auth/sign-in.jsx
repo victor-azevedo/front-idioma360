@@ -39,7 +39,6 @@ const Page = () => {
         const { token } = await postSignIn(formSignIn);
         signIn(token);
         toast.success("Login realizado com sucesso");
-        router.reload();
         router.push("/app");
       } catch (err) {
         handleResponseError(err);
