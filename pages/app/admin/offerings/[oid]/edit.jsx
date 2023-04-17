@@ -30,7 +30,7 @@ const Page = () => {
     async function getOfferingData() {
       if (router.isReady) {
         try {
-          await getOfferingById(router.query.cid);
+          await getOfferingById(router.query.oid);
         } catch (error) {
           handleResponseError(error);
         }

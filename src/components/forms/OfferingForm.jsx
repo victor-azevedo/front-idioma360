@@ -4,9 +4,7 @@ import usePatchOffering from "@/src/hooks/api/usePatchOffering";
 import usePostOffering from "@/src/hooks/api/usePostOffering";
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Divider,
@@ -25,6 +23,7 @@ import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import AdminEditSaveBox from "../AdminEditSaveBox";
 
 export default function OfferingForm({
   id,
@@ -298,30 +297,11 @@ export default function OfferingForm({
           </Box>
         </CardContent>
         <Divider />
-        <CardActions sx={{ justifyContent: "flex-end", gap: 2 }}>
-          {allowEdition && (
-            <Button
-              onClick={() =>
-                type !== "create" ? setAllowEdition(false) : router.back()
-              }
-              disabled={!allowEdition}
-            >
-              Cancela
-            </Button>
-          )}
-          {type !== "create" && (
-            <Button
-              variant="contained"
-              disabled={allowEdition}
-              onClick={() => setAllowEdition(true)}
-            >
-              Editar
-            </Button>
-          )}
-          <Button variant="contained" type="submit" disabled={!allowEdition}>
-            Salvar
-          </Button>
-        </CardActions>
+        <AdminEditSaveBox
+          allowEdition={allowEdition}
+          setAllowEdition={setAllowEdition}
+          type={type}
+        />
       </Card>
     </form>
   );
