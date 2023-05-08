@@ -33,6 +33,15 @@ export const indigo = withAlphas({
   contrastText: "#FFFFFF",
 });
 
+export const purple = withAlphas({
+  lightest: "#F5F7FF",
+  light: "#EBEEFE",
+  main: "#4D44B5",
+  dark: "#4338CA",
+  darkest: "#312E81",
+  contrastText: "#FFFFFF",
+});
+
 export const success = withAlphas({
   lightest: "#F0FDF9",
   light: "#3FC79A",
@@ -45,7 +54,7 @@ export const success = withAlphas({
 export const info = withAlphas({
   lightest: "#ECFDFF",
   light: "#CFF9FE",
-  main: "#06AED4",
+  main: "#FB7D5B",
   dark: "#0E7090",
   darkest: "#164C63",
   contrastText: "#FFFFFF",
@@ -68,3 +77,28 @@ export const error = withAlphas({
   darkest: "#7A271A",
   contrastText: "#FFFFFF",
 });
+
+export const figmaThemeColor = {
+  purple: { main: "#4D44B5" },
+  orange: "#FB7D5B",
+  yellow: "#FCC43E",
+  text: "#303972",
+  green: "#4CBC9A",
+  red: "#FF4550",
+  background: "#F3F4FF",
+};
+
+export const figmaNeutral = {
+  white: "#FFFFFF",
+  grey1: "#F5F5F5",
+  grey2: "#C1BBEB",
+  grey3: "#A098AE",
+};
+
+export const figmaGradient = {
+  linear1:
+    "linear-gradient(180deg, #FB7D5B -242.86%, rgba(251, 125, 91, 0) 100%)",
+  linear2:
+    "linear-gradient(180deg, #FCC43E -241.95%, rgba(252, 196, 62, 0) 100%)",
+  linear3: "linear-gradient(178.76deg, #4D44B5 -47.98%, #303972 163.51%)",
+};
