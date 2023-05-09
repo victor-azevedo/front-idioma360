@@ -1,25 +1,25 @@
-import { apiAuth } from "./api-service";
+import { api } from "./api-service";
 
 export async function postAddress(data) {
-  const response = await apiAuth.post("/address/user", data);
+  const response = await api.post("/address/user", data);
 
   return response.data;
 }
 
 export async function getAddress() {
-  const response = await apiAuth.get("/user/address");
+  const response = await api.get("/user/address");
 
   return response.data;
 }
 
 export async function getStates() {
-  const response = await apiAuth.get("/address/states");
+  const response = await api.get("/address/states");
 
   return response.data;
 }
 
 export async function getCities(uf) {
-  const response = await apiAuth.get(`/address/cities?uf=${uf}`);
+  const response = await api.get(`/address/cities?uf=${uf}`);
 
   return response.data;
 }

@@ -1,9 +1,9 @@
-import { apiAuth } from "./api-service";
+import { api } from "./api-service";
 
 export async function getOfferings({ status }) {
   const query = status ? `?status=${status}` : "";
 
-  const response = await apiAuth.get(`/offerings${query}`);
+  const response = await api.get(`/offerings${query}`);
 
   return response.data;
 }
