@@ -20,11 +20,11 @@ function save(accessToken, ctx = null) {
 
 function get(ctx = null) {
   const cookies = nookies.get(ctx);
-  return cookies[ACCESS_TOKEN_KEY] || "";
+  return cookies[ACCESS_TOKEN_KEY] || null;
 }
 
 function destroy(ctx = null) {
-  nookies.destroy(ctx, ACCESS_TOKEN_KEY);
+  nookies.destroy(ctx, ACCESS_TOKEN_KEY, { path: "/" });
 }
 
 function decode(ctx = null) {
