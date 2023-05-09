@@ -3,8 +3,9 @@ import Link from "next/link";
 import PropTypes from "prop-types";
 
 import { Logo } from "@/src/components/logo";
+import withoutAuthGuard from "@/src/hocs/without-auth-guard";
 
-export const Layout = (props) => {
+export const Layout = withoutAuthGuard((props) => {
   const { children } = props;
 
   return (
@@ -89,7 +90,7 @@ export const Layout = (props) => {
       </Grid>
     </Box>
   );
-};
+});
 
 Layout.prototypes = {
   children: PropTypes.node,
