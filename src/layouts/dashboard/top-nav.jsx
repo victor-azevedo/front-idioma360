@@ -27,9 +27,8 @@ export const TopNav = (props) => {
           width: {
             lg: `calc(100% - ${SIDE_NAV_WIDTH}px)`,
           },
-          backgroundColor: "rgb(134,137,168)",
-          background:
-            "radial-gradient(circle, rgba(134,137,168,0.896796218487395) 5%, rgba(148,187,233,1) 100%)",
+          backgroundColor: "rgba(178, 224, 246, 0.325)",
+
           zIndex: (theme) => theme.zIndex.appBar,
         }}
       >

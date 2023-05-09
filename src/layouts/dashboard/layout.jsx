@@ -15,9 +15,7 @@ const LayoutRoot = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {
     paddingLeft: SIDE_NAV_WIDTH,
   },
-  backgroundColor: "rgb(134,137,168)",
-  background:
-    "radial-gradient(circle, rgba(134,137,168,0.896796218487395) 5%, rgba(148,187,233,1) 100%)",
+  backgroundColor: "rgba(178, 224, 246, 0.325)",
 }));
 
 const LayoutContainer = styled("div")({
@@ -25,9 +23,7 @@ const LayoutContainer = styled("div")({
   flex: "1 1 auto",
   flexDirection: "column",
   width: "100%",
-  backgroundColor: "rgb(134,137,168)",
-  background:
-    "radial-gradient(circle, rgba(134,137,168,0.896796218487395) 5%, rgba(148,187,233,1) 100%)",
+  // backgroundColor: "rgba(150, 244, 222, 0.407)",
 });
 
 export const Layout = withAuthGuard((props) => {
