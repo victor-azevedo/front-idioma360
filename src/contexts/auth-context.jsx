@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { tokenService } from "../services";
+import { apiService } from "../services/api";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -19,7 +20,7 @@ const HANDLERS = {
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-  user: null,
+  user: {},
 };
 
 const handlers = {
@@ -53,7 +54,7 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: false,
-      user: null,
+      user: {},
     };
   },
 };
@@ -77,11 +78,9 @@ export const AuthProvider = (props) => {
     initialized.current = true;
 
     const token = tokenService.get();
-    updateAuthState(token);
-  };
-
-  const updateAuthState = (token) => {
     if (token) {
+      apiService.setAuthorization(token);
+
       const user = { ...tokenService.decode(), token };
       dispatch({
         type: HANDLERS.INITIALIZE,
@@ -104,8 +103,9 @@ export const AuthProvider = (props) => {
 
   const signIn = useCallback((token) => {
     tokenService.save(token);
-    const user = { ...tokenService.decode(), token };
+    apiService.setAuthorization(token);
 
+    const user = { ...tokenService.decode(), token };
     dispatch({
       type: HANDLERS.SIGN_IN,
       payload: user,
@@ -114,6 +114,7 @@ export const AuthProvider = (props) => {
 
   const signOut = useCallback(() => {
     tokenService.destroy();
+    apiService.deleteAuthorization();
 
     dispatch({
       type: HANDLERS.SIGN_OUT,
