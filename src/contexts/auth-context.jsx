@@ -77,7 +77,10 @@ export const AuthProvider = (props) => {
     initialized.current = true;
 
     const token = tokenService.get();
+    updateAuthState(token);
+  };
 
+  const updateAuthState = (token) => {
     if (token) {
       const user = { ...tokenService.decode(), token };
       dispatch({
