@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -60,8 +61,6 @@ const handlers = {
 const reducer = (state, action) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;
 
-// The role of this context is to propagate authentication state through the App tree.
-
 export const AuthContext = createContext({ undefined });
 
 export const AuthProvider = (props) => {
@@ -77,13 +76,10 @@ export const AuthProvider = (props) => {
 
     initialized.current = true;
 
-    let isAuthenticated = false;
+    const token = tokenService.get();
 
-    isAuthenticated = tokenService.get() ? true : false;
-
-    if (isAuthenticated) {
-      const user = tokenService.decode();
-
+    if (token) {
+      const user = { ...tokenService.decode(), token };
       dispatch({
         type: HANDLERS.INITIALIZE,
         payload: user,
@@ -103,32 +99,29 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const signIn = (token) => {
+  const signIn = useCallback((token) => {
     tokenService.save(token);
-
-    const user = tokenService.decode();
+    const user = { ...tokenService.decode(), token };
 
     dispatch({
       type: HANDLERS.SIGN_IN,
       payload: user,
     });
-  };
+  }, []);
 
-  const signUp = async () => {};
-
-  const signOut = () => {
+  const signOut = useCallback(() => {
     tokenService.destroy();
+
     dispatch({
       type: HANDLERS.SIGN_OUT,
     });
-  };
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
         signIn,
-        signUp,
         signOut,
       }}
     >
