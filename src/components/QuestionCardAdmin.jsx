@@ -31,7 +31,7 @@ export default function QuestionCardAdmin({
     } catch (err) {
       handleResponseError(err);
     } finally {
-      router.reload();
+      router.replace(router.asPath);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
