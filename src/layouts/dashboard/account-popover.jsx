@@ -14,14 +14,13 @@ import { useCallback } from "react";
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
-  const auth = useAuth();
-  const { user } = auth;
+  const { user, signOut } = useAuth();
 
   const handleSignOut = useCallback(() => {
     onClose?.();
-    auth.signOut();
+    signOut();
     router.push("/auth/sign-in");
-  }, [onClose, auth, router]);
+  }, [onClose, signOut, router]);
 
   return (
     <Popover
