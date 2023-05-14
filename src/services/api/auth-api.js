@@ -12,7 +12,14 @@ export async function postSignIn(data) {
   return response.data;
 }
 
+export async function postSignInUserTest(data) {
+  const response = await api.post("/auth/sign-in/user-test", data);
+
+  return response.data;
+}
+
 export const authApi = {
   postSignUp,
   postSignIn,
+  postSignInUserTest,
 };

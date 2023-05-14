@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+import SignInTestForm from "@/src/components/forms/SignInTestForm";
 import handleResponseError from "@/src/errors/handleResponseError";
 import useSignIn from "@/src/hooks/api/useSignIn";
 import { useAuth } from "@/src/hooks/use-auth";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
 
-const INITIAL_FORM_SIGN_IN = { email: "", password: "", submit: null };
+const INITIAL_FORM_SIGN_IN = { email: "", password: "" };
 
 const Page = () => {
   const router = useRouter();
@@ -34,9 +35,7 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        // eslint-disable-next-line no-unused-vars
-        const { submit, ...formSignIn } = values;
-        const { token } = await postSignIn(formSignIn);
+        const { token } = await postSignIn(values);
         signIn(token);
         toast.success("Login realizado com sucesso");
         router.push("/app");
@@ -111,11 +110,6 @@ const Page = () => {
                   value={formik.values.password}
                 />
               </Stack>
-              {formik.errors.submit && (
-                <Typography color="error" sx={{ mt: 3 }} variant="body2">
-                  {formik.errors.submit}
-                </Typography>
-              )}
               <Button
                 fullWidth
                 size="large"
@@ -127,6 +121,7 @@ const Page = () => {
               </Button>
             </form>
           </div>
+          <SignInTestForm />
         </Box>
       </Box>
     </>
