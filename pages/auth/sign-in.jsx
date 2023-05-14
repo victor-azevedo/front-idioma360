@@ -11,6 +11,7 @@ import handleResponseError from "@/src/errors/handleResponseError";
 import useSignIn from "@/src/hooks/api/useSignIn";
 import { useAuth } from "@/src/hooks/use-auth";
 import { Layout as AuthLayout } from "@/src/layouts/auth/layout";
+import { useEffect, useState } from "react";
 
 const INITIAL_FORM_SIGN_IN = { email: "", password: "" };
 
@@ -19,7 +20,13 @@ const Page = () => {
 
   const { signIn } = useAuth();
 
-  const { postSignIn } = useSignIn();
+  const { postSignIn, signInLoading } = useSignIn();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(signInLoading);
+  }, [signInLoading]);
 
   const formik = useFormik({
     initialValues: INITIAL_FORM_SIGN_IN,
@@ -34,6 +41,7 @@ const Page = () => {
         .required("Senha é obrigatória"),
     }),
     onSubmit: async (values, helpers) => {
+      setIsLoading(true);
       try {
         const { token } = await postSignIn(values);
         signIn(token);
@@ -44,6 +52,8 @@ const Page = () => {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -97,6 +107,7 @@ const Page = () => {
                   onChange={formik.handleChange}
                   type="email"
                   value={formik.values.email}
+                  disabled={isLoading}
                 />
                 <TextField
                   error={!!(formik.touched.password && formik.errors.password)}
@@ -108,6 +119,7 @@ const Page = () => {
                   onChange={formik.handleChange}
                   type="password"
                   value={formik.values.password}
+                  disabled={isLoading}
                 />
               </Stack>
               <Button
@@ -116,12 +128,17 @@ const Page = () => {
                 sx={{ mt: 3 }}
                 type="submit"
                 variant="contained"
+                disabled={isLoading}
               >
                 Continue
               </Button>
             </form>
           </div>
-          <SignInTestForm />
+          {process.env.NEXT_PUBLIC_IS_PORTPOLIO === "true" ? (
+            <SignInTestForm isLoading={isLoading} setIsLoading={setIsLoading} />
+          ) : (
+            ""
+          )}
         </Box>
       </Box>
     </>

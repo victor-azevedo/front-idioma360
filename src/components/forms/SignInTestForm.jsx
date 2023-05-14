@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const SignInTestForm = () => {
+const SignInTestForm = ({ isLoading, setIsLoading }) => {
   const router = useRouter();
 
   const { signIn } = useAuth();
@@ -28,6 +28,7 @@ const SignInTestForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const { token } = await postSignInUserTest({ userRole: testLogin });
       signIn(token);
@@ -35,6 +36,8 @@ const SignInTestForm = () => {
       router.push("/app");
     } catch (err) {
       handleResponseError(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -57,6 +60,7 @@ const SignInTestForm = () => {
               }}
               row
               required
+              disabled={isLoading}
             >
               <FormControlLabel
                 value="student"
@@ -69,7 +73,12 @@ const SignInTestForm = () => {
                 label="Administrador"
               />
             </RadioGroup>
-            <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="submit"
+              variant="outlined"
+              disabled={isLoading}
+            >
               Continue como usuário de teste
             </Button>
           </FormControl>
