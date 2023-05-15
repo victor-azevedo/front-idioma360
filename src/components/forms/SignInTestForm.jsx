@@ -66,11 +66,15 @@ const SignInTestForm = ({ isLoading, setIsLoading }) => {
                 value="student"
                 control={<Radio />}
                 label="Estudante"
+              disabled={isLoading}
+
               />
               <FormControlLabel
                 value="admin"
                 control={<Radio />}
                 label="Administrador"
+              disabled={isLoading}
+
               />
             </RadioGroup>
             <Button
