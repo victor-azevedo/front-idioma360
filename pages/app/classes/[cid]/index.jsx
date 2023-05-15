@@ -1,9 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
-import Head from "next/head";
+import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import {
   getDayFromISOdate,
@@ -43,69 +41,58 @@ const Page = () => {
 
   return (
     <>
-      <Head>
-        <title>{classe.name} | Idioma 360</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
+      <Typography variant="h4" gutterBottom>
+        {classe.course.name}{" "}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        {classe.course.description}
+      </Typography>
+      <Typography variant="body1" color="text.secondary" gutterBottom>
+        Carga horária: {classe.course.creditHours} horas
+      </Typography>
+      <Typography variant="body1" color="text.primary" gutterBottom>
+        {classe.name}
+      </Typography>
+      <Typography variant="body1" color="text.primary" gutterBottom>
+        Período do Curso:{" "}
+        {` ${getDayFromISOdate(classe.startDate)} à ${getDayFromISOdate(
+          classe.endDate
+        )}`}
+      </Typography>
+      <Typography variant="body1" color="text.primary" gutterBottom>
+        {classe.days.length === 1 ? "Dia" : "Dias"}:{" "}
+        {weekDaysToPtBR(classe.days)}
+      </Typography>
+      <Typography variant="body1" color="text.primary" gutterBottom>
+        Horário das aulas:{" "}
+        {` ${getTimeFromISOdate(classe.startTime)} às ${getTimeFromISOdate(
+          classe.endTime
+        )}`}
+      </Typography>
+      <Typography variant="body1" color="text.primary" gutterBottom>
+        Vagas disponíveis: {classe.vacancies}
+      </Typography>
+      <Button
+        onClick={handleForwardEnroll}
+        variant="contained"
+        size="medium"
+        sx={{ mt: 2 }}
+        disabled={classe.isUserEnrolledFOrThisClasse}
       >
-        <ContainerEaseIn>
-          <Typography variant="h4" gutterBottom>
-            {classe.course.name}{" "}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            {classe.course.description}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            Carga horária: {classe.course.creditHours} horas
-          </Typography>
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            {classe.name}
-          </Typography>
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            Período do Curso:{" "}
-            {` ${getDayFromISOdate(classe.startDate)} à ${getDayFromISOdate(
-              classe.endDate
-            )}`}
-          </Typography>
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            {classe.days.length === 1 ? "Dia" : "Dias"}:{" "}
-            {weekDaysToPtBR(classe.days)}
-          </Typography>
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            Horário das aulas:{" "}
-            {` ${getTimeFromISOdate(classe.startTime)} às ${getTimeFromISOdate(
-              classe.endTime
-            )}`}
-          </Typography>
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            Vagas disponíveis: {classe.vacancies}
-          </Typography>
-          <Button
-            onClick={handleForwardEnroll}
-            variant="contained"
-            size="medium"
-            sx={{ mt: 2 }}
-            disabled={classe.isUserEnrolledFOrThisClasse}
-          >
-            Inscrever-se
-          </Button>
-          {classe.isUserEnrolledFOrThisClasse ? (
-            <Typography variant="body1" color="text.secondary" gutterBottom>
-              Você ja se encontra inscrito
-            </Typography>
-          ) : (
-            ""
-          )}
-        </ContainerEaseIn>
-      </Box>
+        Inscrever-se
+      </Button>
+      {classe.isUserEnrolledFOrThisClasse ? (
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Você ja se encontra inscrito
+        </Typography>
+      ) : (
+        ""
+      )}
     </>
   );
 };
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Page.getLayout = (page) => (
+  <DashboardLayout pageTitle="Turma">{page}</DashboardLayout>
+);
 
 export default Page;

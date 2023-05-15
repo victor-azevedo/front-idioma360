@@ -1,10 +1,8 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Head from "next/head";
+import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import ClasseEnrollInfo from "@/src/components/ClasseEnrollInfo";
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import UserAddressForm from "@/src/components/UserAddressForm";
 import UserInfo from "@/src/components/UserInfo";
@@ -46,49 +44,35 @@ const Page = () => {
   }
 
   return (
-    <>
-      <Head>
-        <title>Inscrição | Idioma 360</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
+    <Stack spacing={3}>
+      <Typography variant="h4" gutterBottom>
+        Inscrição
+      </Typography>
+      <UserInfo {...userData} />
+      <UserAddressForm {...userData.address} />
+      <ClasseEnrollInfo {...classeToEnroll} />
+      <Button
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        onClick={handleEnrollment}
+        disabled={classeToEnroll.isUserEnrolledFOrThisClasse}
       >
-        <ContainerEaseIn>
-          <Typography variant="h4" gutterBottom>
-            Inscrição
-          </Typography>
-          <Stack spacing={3}>
-            <UserInfo {...userData} />
-            <UserAddressForm {...userData.address} />
-            <ClasseEnrollInfo {...classeToEnroll} />
-            <Button
-              fullWidth
-              size="large"
-              sx={{ mt: 3 }}
-              type="submit"
-              variant="contained"
-              onClick={handleEnrollment}
-              disabled={classeToEnroll.isUserEnrolledFOrThisClasse}
-            >
-              Inscrever
-            </Button>
-            {classeToEnroll.isUserEnrolledFOrThisClasse ? (
-              <Typography variant="body1" color="text.secondary" gutterBottom>
-                Você ja se encontra inscrito
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Stack>
-        </ContainerEaseIn>
-      </Box>
-    </>
+        Inscrever
+      </Button>
+      {classeToEnroll.isUserEnrolledFOrThisClasse ? (
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Você ja se encontra inscrito
+        </Typography>
+      ) : (
+        ""
+      )}
+    </Stack>
   );
 };
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Page.getLayout = (page) => (
+  <DashboardLayout pageTitle="Inscrição">{page}</DashboardLayout>
+);
 
 export default Page;

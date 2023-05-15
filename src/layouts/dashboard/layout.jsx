@@ -2,7 +2,10 @@ import { styled } from "@mui/material/styles";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import { withAuthGuard } from "@/src/hocs/with-auth-guard";
+import { Box } from "@mui/material";
+import Head from "next/head";
 import { SideNav } from "./side-nav";
 import { TopNav } from "./top-nav";
 
@@ -18,16 +21,8 @@ const LayoutRoot = styled("div")(({ theme }) => ({
   backgroundColor: "rgba(178, 224, 246, 0.325)",
 }));
 
-const LayoutContainer = styled("div")({
-  display: "flex",
-  flex: "1 1 auto",
-  flexDirection: "column",
-  width: "100%",
-  // backgroundColor: "rgba(150, 244, 222, 0.407)",
-});
-
 export const Layout = withAuthGuard((props) => {
-  const { children } = props;
+  const { children, pageTitle } = props;
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
 
@@ -47,10 +42,24 @@ export const Layout = withAuthGuard((props) => {
 
   return (
     <>
+      <Head>
+        <title>Idioma 360 | {pageTitle}</title>
+      </Head>
       <TopNav onNavOpen={() => setOpenNav(true)} />
       <SideNav onClose={() => setOpenNav(false)} open={openNav} />
       <LayoutRoot>
-        <LayoutContainer>{children}</LayoutContainer>
+        <Box
+          component="main"
+          sx={{
+            py: 8,
+            display: "flex",
+            flex: "1 1 auto",
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
+          <ContainerEaseIn>{children}</ContainerEaseIn>
+        </Box>
       </LayoutRoot>
     </>
   );

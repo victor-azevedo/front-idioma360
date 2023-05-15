@@ -1,7 +1,5 @@
-import { Box, Stack, Typography } from "@mui/material";
-import Head from "next/head";
+import { Stack, Typography } from "@mui/material";
 
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import TestForm from "@/src/components/forms/TestForm";
 import useGetCourses from "@/src/hooks/api/useGetCourses";
@@ -27,36 +25,19 @@ const Page = () => {
   }
 
   return (
-    <>
-      <Head>
-        <title>Provas | Idioma 360</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <ContainerEaseIn>
-          <Stack spacing={6}>
-            <Stack spacing={3}>
-              <Typography variant="h3" marginLeft={3}>
-                Cadastrar nova Prova
-              </Typography>
-              <TestForm
-                {...initialValuesTestForm}
-                courses={courses}
-                type="create"
-              />
-            </Stack>
-          </Stack>
-        </ContainerEaseIn>
-      </Box>
-    </>
+    <Stack spacing={6}>
+      <Stack spacing={3}>
+        <Typography variant="h3" marginLeft={3}>
+          Cadastrar nova Prova
+        </Typography>
+        <TestForm {...initialValuesTestForm} courses={courses} type="create" />
+      </Stack>
+    </Stack>
   );
 };
 
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Page.getLayout = (page) => (
+  <DashboardLayout pageTitle="Cadastrar Prova">{page}</DashboardLayout>
+);
 
 export default Page;

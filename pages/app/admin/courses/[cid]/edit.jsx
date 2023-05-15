@@ -1,9 +1,7 @@
-import { Box, Stack, Typography } from "@mui/material";
-import Head from "next/head";
+import { Stack, Typography } from "@mui/material";
 
 import { LayoutAdmin as DashboardLayout } from "src/layouts/dashboard/layout-admin";
 
-import ContainerEaseIn from "@/src/components/ContainerEaseIn";
 import LoadingDots from "@/src/components/LoadingDots";
 import CourseForm from "@/src/components/forms/CourseForm";
 import handleResponseError from "@/src/errors/handleResponseError";
@@ -44,30 +42,17 @@ const Page = () => {
   }
 
   return (
-    <>
-      <Head>
-        <title>Cursos | Idioma 360</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <ContainerEaseIn>
-          <Stack spacing={3}>
-            <Typography variant="h4" marginLeft={3}>
-              Editar Curso
-            </Typography>
-            <CourseForm {...courseData} />
-          </Stack>
-        </ContainerEaseIn>
-      </Box>
-    </>
+    <Stack spacing={3}>
+      <Typography variant="h4" marginLeft={3}>
+        Editar Curso
+      </Typography>
+      <CourseForm {...courseData} />
+    </Stack>
   );
 };
 
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Page.getLayout = (page) => (
+  <DashboardLayout pageTitle="Editar Curso">{page}</DashboardLayout>
+);
 
 export default Page;
